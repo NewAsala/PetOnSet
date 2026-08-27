@@ -80,5 +80,4 @@
     <script src={{ asset('js/demo.js') }}></script>
     <script src={{ asset('js/demo-chart-js.js') }}></script>
 </body>
-
 </html>
