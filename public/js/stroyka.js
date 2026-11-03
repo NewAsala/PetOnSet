@@ -613,10 +613,13 @@
                 $content.html($element.val());
 
                 const quill = new Quill($content[0], stroykaQuill.getSettings());
+                const syncContent = function() {
+                    const content = quill.root.innerHTML;
+                    $element.val(content === '<p><br></p>' ? '' : content);
+                };
 
-                quill.on('text-change', function() {
-                    $element.val(container.querySelector('.ql-editor').innerHTML);
-                });
+                quill.on('text-change', syncContent);
+                $element.closest('form').on('submit', syncContent);
 
                 $element.addClass('sa-quill-control--ready');
             },

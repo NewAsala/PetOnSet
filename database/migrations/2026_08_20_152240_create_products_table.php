@@ -25,11 +25,8 @@ return new class extends Migration
             $table->string('barcode')->unique();
             $table->string('sku')->unique();
 
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
-
-            $table->unsignedBigInteger('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->foreignId('category_id')->constrained('categories')->restrictOnDelete();
+            $table->foreignId('brand_id')->constrained('brands')->restrictOnDelete();
 
             $table->timestamps();
         });

@@ -18,6 +18,10 @@ class ProductBatch extends Model
         'product_id',
     ];
 
+    protected $casts = [
+        'expiry_date' => 'date',
+    ];
+
     public function purchaseItem(): BelongsTo
     {
         return $this->belongsTo(PurchaseItem::class);

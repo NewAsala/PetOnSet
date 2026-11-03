@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PaidEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->decimal('subtotal', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('total', 10, 2)->nullable();
-            $table->boolean('paid')->nullable();
+            $table->string('paid')->default(PaidEnum::UNPAID->value);
             $table->decimal('remaining_amount', 10, 2)->nullable();
             $table->date('purchase_date')->nullable();
             $table->string('status')->nullable();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->date('expiry_date')->nullable();
             $table->integer('quantity');
             $table->decimal('purchase_price', 10, 2)->nullable();
-            $table->string('status')->default('active');
+            $table->string('status')->default(StatusEnum::ACTIVE->value);
 
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');

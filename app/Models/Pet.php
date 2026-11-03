@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\GenderEnum;
+use App\Enums\PetTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,6 +20,13 @@ class Pet extends Model
         'customer_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'type' => PetTypeEnum::class,
+            'gender' => GenderEnum::class,
+        ];
+    }
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

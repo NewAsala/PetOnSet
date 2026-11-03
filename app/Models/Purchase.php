@@ -20,6 +20,10 @@ class Purchase extends Model
         'supplier_id',
     ];
 
+    protected $casts = [
+        'purchase_date' => 'date',
+    ];
+
     public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);

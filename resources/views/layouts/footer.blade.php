@@ -1,5 +1,5 @@
-<div class="sa-app__footer d-block d-md-flex"><!-- copyright -->Stroyka
-    Admin — eCommerce Dashboard Template © 2021<div class="m-auto"></div>
-    <div>Powered by HTML — Design by <a href="https://themeforest.net/user/kos9/portfolio">Kos</a></div>
+<div class="sa-app__footer d-block d-md-flex"><!-- copyright -->
+    Admin — Pet on Set Dashboard © 2026<div class="m-auto"></div>
+    <div>Design by <a href="mailto:asala.alakrad@gmail.com">Asala AlAkrad</a></div>
     <!-- copyright / end -->
 </div><!-- sa-app__footer / end -->

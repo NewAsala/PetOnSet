@@ -9,6 +9,7 @@ class SaleItemBatch extends Model
 {
     protected $fillable = [
         'quantity',
+        'purchase_price',
         'sale_item_id',
         'product_batch_id',
     ];

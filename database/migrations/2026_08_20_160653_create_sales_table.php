@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PaymentMethodEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2)->nullable();
             $table->decimal('paid', 10, 2)->nullable();
             $table->decimal('remaining_amount', 10, 2)->nullable();
-            $table->string('payment_method')->nullable();
+            $table->string('payment_method')->default(PaymentMethodEnum::CASH->value);
             $table->string('status')->nullable();
 
             $table->unsignedBigInteger('user_id');

@@ -4781,7 +4781,7 @@ textarea.form-control-lg {
   float: right;
   padding-left: 0.5rem;
   color: #6c757d;
-  content:  var(--bs-breadcrumb-divider, "https://stroyka-admin.html.themeforest.scompiler.ru/") ;
+  content: "/";
 }
 .breadcrumb-item.active {
   color: #6c757d;

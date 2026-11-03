@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use App\Enums\RoleEnum;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $admin = Role::findByName('admin', 'web');
+        $admin = Role::findByName(RoleEnum::ADMIN, 'web');
 
         $admin->syncPermissions([
             'products.view',
@@ -53,7 +54,7 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $manager = Role::findByName('manager', 'web');
+        $manager = Role::findByName(RoleEnum::MANAGER, 'web');
 
         $manager->syncPermissions([
             'products.view',
@@ -91,7 +92,7 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $cashier = Role::findByName('cashier', 'web');
+        $cashier = Role::findByName(RoleEnum::CASHIER, 'web');
 
         $cashier->syncPermissions([
             'products.view',
@@ -121,7 +122,7 @@ class RolePermissionSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $groomer = Role::findByName('groomer', 'web');
+        $groomer = Role::findByName(RoleEnum::GROOMER, 'web');
 
         $groomer->syncPermissions([
             'pets.view',
@@ -139,7 +140,7 @@ class RolePermissionSeeder extends Seeder
         */
 
         $inventoryManager = Role::findByName(
-            'inventory_manager',
+            RoleEnum::INVENTORY_MANAGER,
             'web'
         );
 
@@ -153,6 +154,15 @@ class RolePermissionSeeder extends Seeder
 
             'returns.view',
             'returns.create',
+        ]);
+
+        $inventoryManager = Role::findByName(
+            RoleEnum::EMPLOYEE,
+            'web'
+        );
+
+        $inventoryManager->syncPermissions([
+            'products.view',
         ]);
     }
 }
