@@ -4,11 +4,11 @@
     @php
         $breadcrumbItems = [
             [
-                'label' => 'Suppliers',
+                'label' => __('dashboard.suppliers'),
                 'url' => route('supplier.index'),
             ],
             [
-                'label' => 'Edit Supplier',
+                'label' => __('dashboard.edit_supplier'),
             ],
         ];
     @endphp
@@ -21,7 +21,7 @@
                     'items' => $breadcrumbItems,
                 ])
 
-                <h1 class="h3 m-0">Edit Supplier</h1>
+                <h1 class="h3 m-0">{{ __('dashboard.edit_supplier') }}</h1>
 
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <div class="col-md-6">
 
                     <label for="inputName" class="form-label">
-                        Name
+                        {{ __('dashboard.name') }}
                     </label>
 
                     <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
@@ -59,7 +59,7 @@
                 <div class="col-md-6">
 
                     <label for="inputEmail" class="form-label">
-                        Email
+                        {{ __('dashboard.email') }}
                     </label>
 
                     <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
@@ -78,7 +78,7 @@
                 <div class="col-md-6">
 
                     <label for="inputPhone" class="form-label">
-                        Phone
+                        {{ __('dashboard.phone') }}
                     </label>
 
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
@@ -97,11 +97,11 @@
                 <div class="col-md-6">
 
                     <label for="inputAddress" class="form-label">
-                        Address
+                        {{ __('dashboard.address') }}
                     </label>
 
                     <input type="text" class="form-control @error('address') is-invalid @enderror" name="address"
-                        id="inputAddress" value="{{ old('address', $supplier->address) }}" placeholder="1234 Main St">
+                        id="inputAddress" value="{{ old('address', $supplier->address) }}"                         placeholder="{{ __('dashboard.main_street_placeholder') }}">
 
                     @error('address')
                         <div class="invalid-feedback">
@@ -114,11 +114,11 @@
                 <div class="col-12">
 
                     <label for="inputNotes" class="form-label">
-                        Notes
+                        {{ __('dashboard.notes') }}
                     </label>
 
                     <textarea class="form-control @error('notes') is-invalid @enderror" name="notes"
-                        id="inputNotes" placeholder="Additional information about the supplier">{{ old('notes', $supplier->notes) }}</textarea>
+                        id="inputNotes"                         placeholder="{{ __('dashboard.supplier_additional_information') }}">{{ old('notes', $supplier->notes) }}</textarea>
 
                     @error('notes')
                         <div class="invalid-feedback">
@@ -132,11 +132,11 @@
                 <div class="col-12">
 
                     <button type="submit" class="btn btn-primary">
-                        Update
+                        {{ __('dashboard.update') }}
                     </button>
 
                     <a href="{{ route('supplier.index') }}" class="btn btn-secondary">
-                        Cancel
+                        {{ __('dashboard.cancel') }}
                     </a>
 
                 </div>

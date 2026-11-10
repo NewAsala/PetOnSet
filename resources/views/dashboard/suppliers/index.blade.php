@@ -3,7 +3,7 @@
 @php
     $breadcrumbItems = [
         [
-            'label' => 'Suppliers',
+            'label' => __('dashboard.suppliers'),
         ],
     ];
 @endphp
@@ -11,28 +11,28 @@
     <div class="row g-4 align-items-center">
         <div class="col">
             @include('components.breadcrumb', ['items' => $breadcrumbItems])
-            <h1 class="h3 m-0">Suppliers</h1>
+            <h1 class="h3 m-0">{{ __('dashboard.suppliers') }}</h1>
         </div>
         <div class="col-auto d-flex">
-            <a href="{{ route('supplier.create') }}" class="btn btn-primary">New supplier</a>
+            <a href="{{ route('supplier.create') }}" class="btn btn-primary">{{ __('dashboard.new_supplier') }}</a>
         </div>
     </div>
 </div>
 
 <div class="card">
     <div class="p-4">
-        <input type="text" placeholder="Start typing to search for suppliers" class="form-control form-control--search mx-auto" id="table-search" />
+        <input type="text" placeholder="{{ __('dashboard.search_suppliers') }}" class="form-control form-control--search mx-auto" id="table-search" />
     </div>
     <div class="sa-divider"></div>
     <table class="sa-datatables-init" data-order="[[ 1, &quot;asc&quot; ]]" data-sa-search-input="#table-search">
         <thead>
             <tr>
                 <th class="w-min" data-orderable="false">
-                    <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..." />
+                    <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="{{ __('dashboard.select_all') }}" />
                 </th>
-                <th class="min-w-20x">Name</th>
-                <th>Phone</th>
-                <th>Registered</th>
+                <th class="min-w-20x">{{ __('dashboard.name') }}</th>
+                <th>{{ __('dashboard.phone') }}</th>
+                <th>{{ __('dashboard.registered') }}</th>
                 <th class="w-min" data-orderable="false"></th>
             </tr>
         </thead>
@@ -40,7 +40,7 @@
             @foreach ($suppliers as $supplier)
                 <tr>
                     <td>
-                        <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..." />
+                        <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="{{ __('dashboard.select_supplier') }}" />
                     </td>
                     <td>
                         <div class="d-flex align-items-center">
@@ -60,7 +60,7 @@
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-sa-muted btn-sm" type="button" id="supplier-context-menu-0" 
-                                data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
+                                data-bs-toggle="dropdown" aria-expanded="false" aria-label="{{ __('dashboard.more') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="3"
                                     height="13" fill="currentColor">
                                     <path
@@ -69,8 +69,8 @@
                                 </svg>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="supplier-context-menu-0">
-                                <li><a class="dropdown-item" href="{{ route('supplier.edit', ['supplier' => $supplier->id]) }}">Edit</a></li>
-                                <li><a class="dropdown-item" href="{{ route('supplier.show', ['supplier' => $supplier->id]) }}">Show</a></li>
+                                <li><a class="dropdown-item" href="{{ route('supplier.edit', ['supplier' => $supplier->id]) }}">{{ __('dashboard.edit') }}</a></li>
+                                <li><a class="dropdown-item" href="{{ route('supplier.show', ['supplier' => $supplier->id]) }}">{{ __('dashboard.show') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
@@ -83,7 +83,7 @@
                                         data-delete-url="{{ route('supplier.destroy', $supplier) }}"
                                         data-delete-name="{{ $supplier->name }}"
                                     >
-                                        Delete
+                                        {{ __('dashboard.delete') }}
                                     </button>
                                 </li>                         
                             </ul>

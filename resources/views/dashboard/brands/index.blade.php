@@ -5,7 +5,7 @@
 @php
     $breadcrumbItems = [
         [
-            'label' => 'Brands',
+            'label' => __('dashboard.brands'),
         ],
     ];
 @endphp
@@ -20,7 +20,7 @@
                 'items' => $breadcrumbItems
             ])
 
-            <h1 class="h3 m-0">Brands</h1>
+            <h1 class="h3 m-0">{{ __('dashboard.brands') }}</h1>
 
         </div>
 
@@ -32,7 +32,7 @@
                 data-bs-toggle="modal"
                 data-bs-target="#createBrandModal"
             >
-                New brand
+                {{ __('dashboard.new_brand') }}
             </button>
 
         </div>
@@ -49,7 +49,7 @@
 
         <input
             type="text"
-            placeholder="Start typing to search for brands"
+            placeholder="{{ __('dashboard.search_brands') }}"
             class="form-control form-control--search mx-auto"
             id="table-search"
         />
@@ -77,16 +77,16 @@
                     <input
                         type="checkbox"
                         class="form-check-input m-0 fs-exact-16 d-block"
-                        aria-label="Select all"
+                        aria-label="{{ __('dashboard.select_all') }}"
                     />
                 </th>
 
                 <th class="min-w-20x">
-                    Brand Name
+                    {{ __('dashboard.brand_name') }}
                 </th>
 
                 <th>
-                    Created
+                    {{ __('dashboard.created') }}
                 </th>
 
                 <th
@@ -111,7 +111,7 @@
                         <input
                             type="checkbox"
                             class="form-check-input m-0 fs-exact-16 d-block"
-                            aria-label="Select brand"
+                            aria-label="{{ __('dashboard.select_brand') }}"
                         />
 
                     </td>
@@ -154,7 +154,7 @@
                                 id="brand-context-menu-{{ $brand->id }}"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                aria-label="More"
+                                aria-label="{{ __('dashboard.more') }}"
                             >
 
                                 <svg
@@ -190,7 +190,7 @@
                                         data-brand-name="{{ $brand->name }}"
                                         data-update-url="{{ route('brand.update', $brand) }}"
                                     >
-                                        Edit
+                                        {{ __('dashboard.edit') }}
                                     </button>
 
                                 </li>
@@ -212,7 +212,7 @@
                                         data-delete-url="{{ route('brand.destroy', $brand) }}"
                                         data-delete-name="{{ $brand->name }}"
                                     >
-                                        Delete
+                                        {{ __('dashboard.delete') }}
                                     </button>
 
                                 </li>
@@ -234,7 +234,7 @@
                         class="text-center py-5"
                     >
                         <div class="text-muted">
-                            No brands found.
+                            {{ __('dashboard.no_brands_found') }}
                         </div>
                     </td>
 
@@ -283,14 +283,14 @@
                     class="modal-title"
                     id="createBrandModalLabel"
                 >
-                    Create Brand
+                    {{ __('dashboard.create_brand') }}
                 </h5>
 
                 <button
                     type="button"
-                    class="btn-close"
+                    class="btn-close m-0"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label="{{ __('dashboard.close') }}"
                 ></button>
 
             </div>
@@ -311,7 +311,7 @@
                             for="createBrandName"
                             class="form-label"
                         >
-                            Brand name
+                            {{ __('dashboard.brand_name') }}
                         </label>
 
                         <input
@@ -320,7 +320,7 @@
                             id="createBrandName"
                             name="name"
                             value="{{ old('name') }}"
-                            placeholder="Enter brand name"
+                            placeholder="{{ __('dashboard.enter_brand_name') }}"
                             required
                         >
 
@@ -344,14 +344,14 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
-                        Cancel
+                        {{ __('dashboard.cancel') }}
                     </button>
 
                     <button
                         type="submit"
                         class="btn btn-primary"
                     >
-                        Save
+                        {{ __('dashboard.save') }}
                     </button>
 
                 </div>
@@ -387,14 +387,14 @@
                     class="modal-title"
                     id="editBrandModalLabel"
                 >
-                    Edit Brand
+                    {{ __('dashboard.edit_brand') }}
                 </h5>
 
                 <button
                     type="button"
-                    class="btn-close"
+                    class="btn-close m-0"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label="{{ __('dashboard.close') }}"
                 ></button>
 
             </div>
@@ -416,7 +416,7 @@
                             for="editBrandName"
                             class="form-label"
                         >
-                            Brand name
+                            {{ __('dashboard.brand_name') }}
                         </label>
 
                         <input
@@ -444,14 +444,14 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
-                        Cancel
+                        {{ __('dashboard.cancel') }}
                     </button>
 
                     <button
                         type="submit"
                         class="btn btn-primary"
                     >
-                        Update
+                        {{ __('dashboard.update') }}
                     </button>
 
                 </div>

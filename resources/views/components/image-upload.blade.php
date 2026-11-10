@@ -4,8 +4,8 @@
     'previewId' => null,
     'preview' => asset('images/default_product.png'),
     'accept' => 'image/*',
-    'helpText' => 'Choose an image to upload.',
-    'alt' => 'Image preview',
+    'helpText' => __('dashboard.image_upload_help'),
+    'alt' => __('dashboard.image_preview'),
 ])
 
 @php

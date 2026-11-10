@@ -114,14 +114,14 @@ class PurchaseRequest extends FormRequest
                 if ($discount > $subtotal) {
                     $validator->errors()->add(
                         'discount',
-                        'The discount cannot exceed the subtotal.'
+                        __('The discount cannot exceed the subtotal.')
                     );
                 }
 
                 if ($paid > $total) {
                     $validator->errors()->add(
                         'paid',
-                        'The paid amount cannot exceed the purchase total.'
+                        __('The paid amount cannot exceed the purchase total.')
                     );
                 }
 
@@ -168,7 +168,7 @@ class PurchaseRequest extends FormRequest
                     if ($query->exists()) {
                         $validator->errors()->add(
                             "items.$index.batch_number",
-                            'This batch number already exists.'
+                            __('This batch number already exists.')
                         );
                     }
                 }
@@ -180,43 +180,43 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'supplier_id.required' =>
-                'Please select a supplier.',
+                __('Please select a supplier.'),
 
             'supplier_id.exists' =>
-                'The selected supplier does not exist.',
+                __('The selected supplier does not exist.'),
 
             'invoice_number.required' =>
-                'Invoice number is required.',
+                __('Invoice number is required.'),
 
             'invoice_number.unique' =>
-                'This invoice number already exists.',
+                __('This invoice number already exists.'),
 
             'purchase_date.required' =>
-                'Purchase date is required.',
+                __('Purchase date is required.'),
 
             'items.required' =>
-                'Please add at least one product.',
+                __('Please add at least one product.'),
 
             'items.min' =>
-                'A purchase must contain at least one product.',
+                __('A purchase must contain at least one product.'),
 
             'items.*.product_id.required' =>
-                'Please select a product.',
+                __('Please select a product.'),
 
             'items.*.quantity.min' =>
-                'Quantity must be at least 1.',
+                __('Quantity must be at least 1.'),
 
             'items.*.cost.min' =>
-                'Cost cannot be negative.',
+                __('Cost cannot be negative.'),
 
             'items.*.batch_number.required' =>
-                'Batch number is required.',
+                __('Batch number is required.'),
 
             'items.*.batch_number.distinct' =>
-                'Batch numbers must be unique within this purchase.',
+                __('Batch numbers must be unique within this purchase.'),
 
             'items.*.expiry_date.after_or_equal' =>
-                'Expiry date cannot be before the purchase date.',
+                __('Expiry date cannot be before the purchase date.'),
         ];
     }
 }

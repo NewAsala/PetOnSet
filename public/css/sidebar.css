@@ -1,0 +1,8 @@
+.sa-nav--sidebar .sa-nav__menu-item--active > .sa-nav__link {
+    background-color: rgba(255, 211, 51, 0.16);
+    color: #ffd333;
+}
+
+.sa-nav--sidebar .sa-nav__menu-item--active > .sa-nav__link:hover {
+    background-color: rgba(255, 211, 51, 0.22);
+}

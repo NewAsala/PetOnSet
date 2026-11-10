@@ -9,8 +9,8 @@
 
 @php
     $breadcrumbItems = [
-        ['label' => 'Purchases', 'url' => route('purchase.index')],
-        ['label' => 'Edit Purchase', 'url' => null],
+        ['label' => __('dashboard.purchases'), 'url' => route('purchase.index')],
+        ['label' => __('dashboard.edit_purchase'), 'url' => null],
     ];
 
     $oldItems = old('items');
@@ -37,14 +37,14 @@
 
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
                 <div>
-                    <h1 class="h3 m-0">Edit Purchase</h1>
-                    <p class="text-muted mb-0">Update invoice {{ $purchase->invoice_number }}.</p>
+                    <h1 class="h3 m-0">{{ __('dashboard.edit_purchase') }}</h1>
+                    <p class="text-muted mb-0">{{ __('dashboard.update_invoice', ['invoice' => $purchase->invoice_number]) }}</p>
                 </div>
             </div>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
-                    <strong>Please correct the following errors:</strong>
+                    <strong>{{ __('dashboard.correct_following_errors') }}</strong>
                     <ul class="mb-0 mt-2">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -59,15 +59,15 @@
 
                 <div class="card mb-4">
                     <div class="card-header bg-white">
-                        <h5 class="mb-0">Purchase Information</h5>
+                        <h5 class="mb-0">{{ __('dashboard.purchase_details') }}</h5>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="supplier_id" class="form-label">Supplier <span class="text-danger">*</span></label>
+                                <label for="supplier_id" class="form-label">{{ __('dashboard.supplier') }} <span class="text-danger">*</span></label>
                                 <select name="supplier_id" id="supplier_id"
                                         class="form-select @error('supplier_id') is-invalid @enderror" required>
-                                    <option value="">Select supplier</option>
+                                    <option value="">{{ __('dashboard.select_supplier') }}</option>
                                     @foreach ($suppliers as $supplier)
                                         <option value="{{ $supplier->id }}"
                                             @selected(old('supplier_id', $purchase->supplier_id) == $supplier->id)>
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="invoice_number" class="form-label">Invoice Number <span class="text-danger">*</span></label>
+                                <label for="invoice_number" class="form-label">{{ __('dashboard.invoice_number') }} <span class="text-danger">*</span></label>
                                 <input type="text" name="invoice_number" id="invoice_number"
                                        class="form-control @error('invoice_number') is-invalid @enderror"
                                        value="{{ old('invoice_number', $purchase->invoice_number) }}" required>
@@ -91,20 +91,20 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label for="purchase_date" class="form-label">Purchase Date <span class="text-danger">*</span></label>
+                                <label for="purchase_date" class="form-label">{{ __('dashboard.purchase_date') }} <span class="text-danger">*</span></label>
                                 <input type="text" name="purchase_date" id="purchase_date"
                                        class="form-control datepicker-here @error('purchase_date') is-invalid @enderror"
                                        value="{{ old('purchase_date', $purchase->purchase_date?->format('Y-m-d')) }}"
-                                       required data-language="en">
+                                       required data-language="{{ app()->getLocale() }}">
                                 @error('purchase_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label">Currency</label>
+                                <label class="form-label">{{ __('dashboard.currency') }}</label>
                                 <input type="text" class="form-control" value="USD ($)" readonly>
-                                <small class="text-muted">Purchase costs are entered in US dollars.</small>
+                                <small class="text-muted">{{ __('dashboard.purchase_costs_usd') }}</small>
                             </div>
                         </div>
                     </div>
@@ -112,10 +112,10 @@
 
                 <div class="card mb-4">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <h5 class="mb-0">Purchase Items</h5>
+                        <h5 class="mb-0">{{ __('dashboard.purchase_items') }}</h5>
                         <button type="button" class="btn btn-sm btn-outline-primary" id="addItemBtn">
                             <i class="fas fa-plus me-1"></i>
-                            Add Product
+                            {{ __('dashboard.add_product') }}
                         </button>
                     </div>
 
@@ -124,13 +124,13 @@
                             <table class="table table-bordered align-middle mb-0" id="purchaseItemsTable">
                                 <thead class="table-light">
                                     <tr>
-                                        <th style="min-width: 210px;">Product</th>
-                                        <th style="min-width: 100px;">Quantity</th>
-                                        <th style="min-width: 140px;">Unit Cost ($)</th>
-                                        <th style="min-width: 150px;">Batch Number</th>
-                                        <th style="min-width: 150px;">Expiry Date</th>
-                                        <th style="min-width: 130px;">Subtotal ($)</th>
-                                        <th style="width: 60px;">Remove</th>
+                                        <th style="min-width: 210px;">{{ __('dashboard.product') }}</th>
+                                        <th style="min-width: 100px;">{{ __('dashboard.quantity') }}</th>
+                                        <th style="min-width: 140px;">{{ __('dashboard.unit_cost') }}</th>
+                                        <th style="min-width: 150px;">{{ __('dashboard.batch_number') }}</th>
+                                        <th style="min-width: 150px;">{{ __('dashboard.expiry_date') }}</th>
+                                        <th style="min-width: 130px;">{{ __('dashboard.subtotal_dollars') }}</th>
+                                        <th style="width: 60px;">{{ __('dashboard.remove') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody id="purchaseItemsBody">
@@ -139,7 +139,7 @@
                                             <td>
                                                 <select name="items[{{ $index }}][product_id]"
                                                         class="form-select product-select @error("items.$index.product_id") is-invalid @enderror" required>
-                                                    <option value="">Select product</option>
+                                                    <option value="">{{ __('dashboard.select_product') }}</option>
                                                     @foreach ($products as $product)
                                                         <option value="{{ $product->id }}"
                                                             @selected(($oldItem['product_id'] ?? '') == $product->id)>
@@ -164,17 +164,17 @@
                                             <td>
                                                 <input type="text" name="items[{{ $index }}][batch_number]"
                                                        class="form-control" value="{{ $oldItem['batch_number'] ?? '' }}"
-                                                       maxlength="255" placeholder="Unique batch no." required>
+                                                       maxlength="255" placeholder="{{ __('dashboard.unique_batch_placeholder') }}" required>
                                             </td>
                                             <td>
                                                 <input type="text" name="items[{{ $index }}][expiry_date]"
                                                        class="form-control item-expiry datepicker-here"
-                                                       value="{{ $oldItem['expiry_date'] ?? '' }}" data-language="en">
+                                                       value="{{ $oldItem['expiry_date'] ?? '' }}" data-language="{{ app()->getLocale() }}">
                                             </td>
                                             <td><span class="item-subtotal fw-semibold">$0.00</span></td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-sm btn-outline-danger remove-item"
-                                                        title="Remove product" aria-label="Remove product">
+                                                        title="{{ __('dashboard.remove_product') }}" aria-label="{{ __('dashboard.remove_product') }}">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
@@ -186,7 +186,7 @@
                     </div>
                     <div class="card-footer bg-white">
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Number of product lines</span>
+                            <span class="text-muted">{{ __('dashboard.number_of_product_lines') }}</span>
                             <strong id="itemCount">0</strong>
                         </div>
                     </div>
@@ -196,16 +196,16 @@
                     <div class="col-xl-5 col-lg-6">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h5 class="mb-0">Payment Summary</h5>
+                                <h5 class="mb-0">{{ __('dashboard.payment_summary') }}</h5>
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span>Subtotal</span>
+                                    <span>{{ __('dashboard.subtotal') }}</span>
                                     <strong id="subtotalDisplay">$0.00</strong>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="discount" class="form-label">Discount ($)</label>
+                                    <label for="discount" class="form-label">{{ __('dashboard.discount_dollars') }}</label>
                                     <input type="number" name="discount" id="discount"
                                            class="form-control @error('discount') is-invalid @enderror"
                                            value="{{ old('discount', $purchase->discount ?? 0) }}" min="0" step="0.01">
@@ -215,12 +215,12 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span>Total</span>
+                                    <span>{{ __('dashboard.total') }}</span>
                                     <strong id="totalDisplay" class="fs-5">$0.00</strong>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="paid" class="form-label">Amount Paid ($)</label>
+                                    <label for="paid" class="form-label">{{ __('dashboard.amount_paid_dollars') }}</label>
                                     <input type="number" name="paid" id="paid"
                                            class="form-control @error('paid') is-invalid @enderror"
                                            value="{{ old('paid', $purchase->paid ?? 0) }}" min="0" step="0.01">
@@ -230,17 +230,17 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span>Remaining Amount</span>
+                                    <span>{{ __('dashboard.remaining_amount') }}</span>
                                     <strong id="remainingDisplay">$0.00</strong>
                                 </div>
 
                                 <hr>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span>Payment Status</span>
-                                    <span id="paymentStatus" class="badge bg-secondary">Unpaid</span>
+                                    <span>{{ __('dashboard.payment_status') }}</span>
+                                    <span id="paymentStatus" class="badge bg-secondary">{{ __('dashboard.unpaid') }}</span>
                                 </div>
                                 <small class="text-muted d-block mt-2">
-                                    Payment status is calculated automatically from the total and amount paid.
+                                    {{ __('dashboard.payment_status_calculated') }}
                                 </small>
                             </div>
                         </div>
@@ -248,10 +248,10 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mb-4">
-                    <a href="{{ route('purchase.show', $purchase) }}" class="btn btn-light border">Cancel</a>
+                    <a href="{{ route('purchase.show', $purchase) }}" class="btn btn-light border">{{ __('dashboard.cancel') }}</a>
                     <button type="submit" class="btn btn-primary" id="submitPurchaseBtn">
                         <i class="fas fa-save me-1"></i>
-                        Save Changes
+                        {{ __('dashboard.save_changes') }}
                     </button>
                 </div>
             </form>
@@ -263,7 +263,7 @@
     <tr class="purchase-item-row">
         <td>
             <select name="items[__INDEX__][product_id]" class="form-select product-select" required>
-                <option value="">Select product</option>
+                <option value="">{{ __('dashboard.select_product') }}</option>
                 @foreach ($products as $product)
                     <option value="{{ $product->id }}">{{ $product->name }}</option>
                 @endforeach
@@ -274,13 +274,13 @@
         <td><input type="number" name="items[__INDEX__][cost]" class="form-control item-cost"
                    min="0" step="0.01" placeholder="0.00" required></td>
         <td><input type="text" name="items[__INDEX__][batch_number]" class="form-control"
-                   maxlength="255" placeholder="Unique batch no." required></td>
+                   maxlength="255" placeholder="{{ __('dashboard.unique_batch_placeholder') }}" required></td>
         <td><input type="text" name="items[__INDEX__][expiry_date]"
-                   class="form-control item-expiry datepicker-here" data-language="en"></td>
+                   class="form-control item-expiry datepicker-here" data-language="{{ app()->getLocale() }}"></td>
         <td><span class="item-subtotal fw-semibold">$0.00</span></td>
         <td class="text-center">
             <button type="button" class="btn btn-sm btn-outline-danger remove-item"
-                    title="Remove product" aria-label="Remove product">
+                    title="{{ __('dashboard.remove_product') }}" aria-label="{{ __('dashboard.remove_product') }}">
                 <i class="fas fa-trash"></i>
             </button>
         </td>
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function initializeExpiryDatepicker(input) {
             const datepicker = $(input).datepicker({
-                language: 'en',
+                language: @json(app()->getLocale()),
                 dateFormat: 'yyyy-mm-dd',
                 minDate: getMinimumExpiryDate(),
                 onShow: function (instance) {
@@ -366,13 +366,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const statusBadge = document.getElementById('paymentStatus');
         if (total === 0 || paid === 0) {
-            statusBadge.textContent = 'Unpaid';
+            statusBadge.textContent = @json(__('dashboard.unpaid'));
             statusBadge.className = 'badge bg-danger';
         } else if (paid < total) {
-            statusBadge.textContent = 'Partially Paid';
+            statusBadge.textContent = @json(__('dashboard.partially_paid'));
             statusBadge.className = 'badge bg-warning text-dark';
         } else {
-            statusBadge.textContent = 'Paid';
+            statusBadge.textContent = @json(__('dashboard.paid'));
             statusBadge.className = 'badge bg-success';
         }
     }
@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (itemsBody.querySelectorAll('.purchase-item-row').length <= 1) {
-            alert('A purchase must contain at least one product.');
+            alert(@json(__('dashboard.purchase_must_have_product')));
             return;
         }
 
@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const rows = itemsBody.querySelectorAll('.purchase-item-row');
         if (rows.length === 0) {
             event.preventDefault();
-            alert('Please add at least one product.');
+            alert(@json(__('dashboard.please_add_product')));
             return;
         }
 
@@ -445,21 +445,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (discount < 0 || discount > subtotal) {
             event.preventDefault();
-            alert('Discount must be between $0.00 and the subtotal.');
+            alert(@json(__('dashboard.discount_between_zero_subtotal')));
             discountInput.focus();
             return;
         }
 
         if (paid < 0 || paid > total) {
             event.preventDefault();
-            alert('The paid amount cannot exceed the purchase total.');
+            alert(@json(__('dashboard.paid_exceeds_purchase_total')));
             paidInput.focus();
             return;
         }
 
         submitButton.disabled = true;
         submitButton.innerHTML =
-            '<span class="spinner-border spinner-border-sm me-1"></span> Saving...';
+            '<span class="spinner-border spinner-border-sm me-1"></span> ' + @json(__('dashboard.saving'));
     });
 
     calculateTotals();

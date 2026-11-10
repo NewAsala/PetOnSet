@@ -13,7 +13,7 @@
         {{-- Name --}}
         <div class="col-md-6">
             <label for="name" class="form-label">
-                Name
+                {{ __('Name') }}
             </label>
 
             <input
@@ -37,7 +37,7 @@
         {{-- Email --}}
         <div class="col-md-6">
             <label for="email" class="form-label">
-                Email
+                {{ __('Email') }}
             </label>
 
             <input
@@ -60,7 +60,7 @@
         {{-- Phone --}}
         <div class="col-md-6">
             <label for="phone" class="form-label">
-                Phone
+                {{ __('Phone') }}
             </label>
 
             <input
@@ -82,7 +82,7 @@
         {{-- Address --}}
         <div class="col-md-6">
             <label for="address" class="form-label">
-                Address
+                {{ __('Address') }}
             </label>
 
             <input
@@ -109,7 +109,7 @@
                 <div class="alert alert-warning mb-0">
 
                     <p class="mb-2">
-                        Your email address is unverified.
+                        {{ __('Your email address is unverified.') }}
                     </p>
 
                     <button
@@ -117,7 +117,7 @@
                         type="submit"
                         class="btn btn-link p-0"
                     >
-                        Click here to re-send the verification email.
+                        {{ __('Click here to re-send the verification email.') }}
                     </button>
 
                 </div>
@@ -130,7 +130,7 @@
         <div class="col-12">
 
             <button type="submit" class="btn btn-primary">
-                Save
+                {{ __('Save') }}
             </button>
 
         </div>

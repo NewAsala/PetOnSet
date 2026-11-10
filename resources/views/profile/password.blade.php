@@ -3,7 +3,7 @@
     @php
         $breadcrumbItems = [
             [
-                'label' => 'Edit Password',
+                'label' => __('Edit Password'),
             ],
         ];
     @endphp
@@ -12,7 +12,7 @@
             <div class="col">
                 @include('components.breadcrumb', ['items' => $breadcrumbItems])
 
-                <h1 class="h3 m-0">Update Password</h1>
+                <h1 class="h3 m-0">{{ __('Update Password') }}</h1>
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@
                     type="button"
                     class="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label="{{ __('Close') }}"
                 ></button>
             </div>
 
@@ -79,12 +79,12 @@
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    Confirm Delete
+                    {{ __('Confirm Delete') }}
                 </h5>
 
                 <button
                     type="button"
-                    class="btn-close"
+                    class="btn-close m-0"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                 ></button>
@@ -102,7 +102,7 @@
                 <div class="modal-body">
 
                     <p>
-                        Are you sure you want to delete
+                        {{ __('Are you sure you want to delete') }}
                         <strong id="deleteItemName"></strong>?
                     </p>
 
@@ -112,17 +112,16 @@
                     >
                         <i class="bi bi-exclamation-triangle me-2"></i>
 
-                        This customer has
+                        {{ __('This customer has') }}
                         <strong id="deletePetsCount"></strong>
-                        pet(s).
+                        {{ __('pet(s).') }}
 
-                        Deleting this customer will also delete
-                        all associated pets.
+                        {{ __('Deleting this customer will also delete all associated pets.') }}
 
                     </div>
 
                     <p class="text-muted mb-0">
-                        This action cannot be undone.
+                        {{ __('This action cannot be undone.') }}
                     </p>
 
                 </div>
@@ -134,14 +133,14 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
-                        Cancel
+                        {{ __('Cancel') }}
                     </button>
 
                     <button
                         type="submit"
                         class="btn btn-danger"
                     >
-                        Delete
+                        {{ __('Delete') }}
                     </button>
 
                 </div>

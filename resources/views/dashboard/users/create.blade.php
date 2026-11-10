@@ -5,11 +5,11 @@
 @php
     $breadcrumbItems = [
         [
-            'label' => 'Users',
+            'label' => __('dashboard.users'),
             'url' => route('user.index'),
         ],
         [
-            'label' => 'Create User',
+            'label' => __('dashboard.create_user'),
         ],
     ];
 @endphp
@@ -22,7 +22,7 @@
                 'items' => $breadcrumbItems
             ])
 
-            <h1 class="h3 m-0">Create new User</h1>
+            <h1 class="h3 m-0">{{ __('dashboard.create_new_user') }}</h1>
 
         </div>
     </div>
@@ -41,7 +41,7 @@
             <div class="col-md-6">
 
                 <label for="inputName" class="form-label">
-                    Name
+                    {{ __('dashboard.name') }}
                 </label>
 
                 <input
@@ -65,7 +65,7 @@
             <div class="col-md-6">
 
                 <label for="inputEmail" class="form-label">
-                    Email
+                    {{ __('dashboard.email') }}
                 </label>
 
                 <input
@@ -88,7 +88,7 @@
             <div class="col-md-6">
 
                 <label for="inputPhone" class="form-label">
-                    Phone
+                    {{ __('dashboard.phone') }}
                 </label>
 
                 <input
@@ -111,7 +111,7 @@
             <div class="col-md-6">
 
                 <label for="inputRole" class="form-label">
-                    Role
+                    {{ __('dashboard.role') }}
                 </label>
 
                 <select
@@ -121,7 +121,7 @@
                 >
 
                     <option value="">
-                        Select Role
+                        {{ __('dashboard.select_role') }}
                     </option>
 
                     @foreach ($roles as $role)
@@ -149,7 +149,7 @@
             <div class="col-md-6">
 
                 <label for="inputPassword" class="form-label">
-                    Password
+                    {{ __('dashboard.password') }}
                 </label>
 
                 <input
@@ -172,7 +172,7 @@
             <div class="col-md-6">
 
                 <label for="inputPasswordConfirmation" class="form-label">
-                    Confirm Password
+                    {{ __('dashboard.confirm_password') }}
                 </label>
 
                 <input
@@ -189,14 +189,14 @@
             <div class="col-12">
 
                 <button type="submit" class="btn btn-primary">
-                    Save
+                    {{ __('dashboard.save') }}
                 </button>
 
                 <a
                     href="{{ route('user.index') }}"
                     class="btn btn-secondary"
                 >
-                    Cancel
+                    {{ __('dashboard.cancel') }}
                 </a>
 
             </div>

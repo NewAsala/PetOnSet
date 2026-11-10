@@ -6,7 +6,7 @@
         {{-- Current Password --}}
         <div class="col-12">
             <label for="update_password_current_password" class="form-label">
-                Current Password
+                {{ __('Current Password') }}
             </label>
 
             <input
@@ -27,7 +27,7 @@
         {{-- New Password --}}
         <div class="col-12">
             <label for="update_password_password" class="form-label">
-                New Password
+                {{ __('New Password') }}
             </label>
 
             <input
@@ -48,7 +48,7 @@
         {{-- Confirm Password --}}
         <div class="col-12">
             <label for="update_password_password_confirmation" class="form-label">
-                Confirm Password
+                {{ __('Confirm Password') }}
             </label>
 
             <input
@@ -69,7 +69,7 @@
         {{-- Submit --}}
         <div class="col-12">
             <button type="submit" class="btn btn-primary">
-                Save
+                {{ __('Save') }}
             </button>
         </div>
     </form>

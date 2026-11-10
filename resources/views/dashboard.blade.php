@@ -3,12 +3,11 @@
     <div class="py-5">
         <div class="row g-4 align-items-center">
             <div class="col">
-                <h1 class="h3 m-0">Dashboard</h1>
+                <h1 class="h3 m-0">{{ __('dashboard.dashboard') }}</h1>
             </div>
             <div class="col-auto d-flex"><select class="form-select me-3">
-                    <option selected>7 October,
-                        2021</option>
-                </select><a href="#" class="btn btn-primary">Export</a></div>
+                    <option selected>{{ __('dashboard.date_7_october_2021') }}</option>
+                </select><a href="#" class="btn btn-primary">{{ __('dashboard.export') }}</a></div>
         </div>
     </div>
     <div class="row g-4 g-xl-5">
@@ -16,24 +15,23 @@
             <div class="card saw-indicator flex-grow-1"
                 data-sa-container-query="{&quot;340&quot;:&quot;saw-indicator--size--lg&quot;}">
                 <div class="sa-widget-header saw-indicator__header">
-                    <h2 class="sa-widget-header__title">Total
-                        sells</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.total_sells') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-1" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-1">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -51,9 +49,7 @@
                             </svg></div>
                         <div class="saw-indicator__delta-value">34.7%</div>
                     </div>
-                    <div class="saw-indicator__caption">Compared
-                        to April
-                        2021</div>
+                    <div class="saw-indicator__caption">{{ __('dashboard.compared_to_april_2021') }}</div>
                 </div>
             </div>
         </div>
@@ -61,24 +57,23 @@
             <div class="card saw-indicator flex-grow-1"
                 data-sa-container-query="{&quot;340&quot;:&quot;saw-indicator--size--lg&quot;}">
                 <div class="sa-widget-header saw-indicator__header">
-                    <h2 class="sa-widget-header__title">Average
-                        order value</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.average_order') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-2" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-2">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -96,9 +91,7 @@
                             </svg></div>
                         <div class="saw-indicator__delta-value">12.0%</div>
                     </div>
-                    <div class="saw-indicator__caption">Compared
-                        to April
-                        2021</div>
+                    <div class="saw-indicator__caption">{{ __('dashboard.compared_to_april_2021') }}</div>
                 </div>
             </div>
         </div>
@@ -106,24 +99,23 @@
             <div class="card saw-indicator flex-grow-1"
                 data-sa-container-query="{&quot;340&quot;:&quot;saw-indicator--size--lg&quot;}">
                 <div class="sa-widget-header saw-indicator__header">
-                    <h2 class="sa-widget-header__title">Total
-                        orders</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.total_orders') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-3" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-3">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -141,9 +133,7 @@
                             </svg></div>
                         <div class="saw-indicator__delta-value">27.9%</div>
                     </div>
-                    <div class="saw-indicator__caption">Compared
-                        to April
-                        2021</div>
+                    <div class="saw-indicator__caption">{{ __('dashboard.compared_to_april_2021') }}</div>
                 </div>
             </div>
         </div>
@@ -151,24 +141,23 @@
             <div class="card flex-grow-1 saw-pulse"
                 data-sa-container-query="{&quot;560&quot;:&quot;saw-pulse--size--lg&quot;}">
                 <div class="sa-widget-header saw-pulse__header">
-                    <h2 class="sa-widget-header__title">Active
-                        users</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.active_users') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-4" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-4">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -179,9 +168,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Active
-                                    pages</th>
-                                <th class="text-end">Users</th>
+                                <th>{{ __('dashboard.active_pages') }}</th>
+                                <th class="text-end">{{ __('dashboard.users') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -221,26 +209,25 @@
         </div>
         <div class="col-12 col-lg-8 col-xxl-9 d-flex">
             <div class="card flex-grow-1 saw-chart"
-                data-sa-data="[{&quot;label&quot;:&quot;Jan&quot;,&quot;value&quot;:50},{&quot;label&quot;:&quot;Feb&quot;,&quot;value&quot;:130},{&quot;label&quot;:&quot;Mar&quot;,&quot;value&quot;:525},{&quot;label&quot;:&quot;Apr&quot;,&quot;value&quot;:285},{&quot;label&quot;:&quot;May&quot;,&quot;value&quot;:470},{&quot;label&quot;:&quot;Jun&quot;,&quot;value&quot;:130},{&quot;label&quot;:&quot;Jul&quot;,&quot;value&quot;:285},{&quot;label&quot;:&quot;Aug&quot;,&quot;value&quot;:240},{&quot;label&quot;:&quot;Sep&quot;,&quot;value&quot;:710},{&quot;label&quot;:&quot;Oct&quot;,&quot;value&quot;:470},{&quot;label&quot;:&quot;Nov&quot;,&quot;value&quot;:640},{&quot;label&quot;:&quot;Dec&quot;,&quot;value&quot;:1110}]">
+                data-sa-data="[{&quot;label&quot;:&quot;{{ __('dashboard.jan') }}&quot;,&quot;value&quot;:50},{&quot;label&quot;:&quot;{{ __('dashboard.feb') }}&quot;,&quot;value&quot;:130},{&quot;label&quot;:&quot;{{ __('dashboard.mar') }}&quot;,&quot;value&quot;:525},{&quot;label&quot;:&quot;{{ __('dashboard.apr') }}&quot;,&quot;value&quot;:285},{&quot;label&quot;:&quot;{{ __('dashboard.may') }}&quot;,&quot;value&quot;:470},{&quot;label&quot;:&quot;{{ __('dashboard.jun') }}&quot;,&quot;value&quot;:130},{&quot;label&quot;:&quot;{{ __('dashboard.jul') }}&quot;,&quot;value&quot;:285},{&quot;label&quot;:&quot;{{ __('dashboard.aug') }}&quot;,&quot;value&quot;:240},{&quot;label&quot;:&quot;{{ __('dashboard.sep') }}&quot;,&quot;value&quot;:710},{&quot;label&quot;:&quot;{{ __('dashboard.oct') }}&quot;,&quot;value&quot;:470},{&quot;label&quot;:&quot;{{ __('dashboard.nov') }}&quot;,&quot;value&quot;:640},{&quot;label&quot;:&quot;{{ __('dashboard.dec') }}&quot;,&quot;value&quot;:1110}]">
                 <div class="sa-widget-header saw-chart__header">
-                    <h2 class="sa-widget-header__title">Income
-                        statistics</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.income_statistics') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-5" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-5">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -254,24 +241,23 @@
         <div class="col-12 col-xxl-9 d-flex">
             <div class="card flex-grow-1 saw-table">
                 <div class="sa-widget-header saw-table__header">
-                    <h2 class="sa-widget-header__title">Recent
-                        orders</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.recent_orders') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-6" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-6">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -281,12 +267,12 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>No.</th>
-                                <th>Status</th>
-                                <th>Co.</th>
-                                <th>Customer</th>
-                                <th>Date</th>
-                                <th>Total</th>
+                                <th>{{ __('dashboard.no_abbreviation') }}</th>
+                                <th>{{ __('dashboard.status') }}</th>
+                                <th>{{ __('dashboard.company_abbreviation') }}</th>
+                                <th>{{ __('dashboard.customer') }}</th>
+                                <th>{{ __('dashboard.date') }}</th>
+                                <th>{{ __('dashboard.total') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -294,11 +280,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00745</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-primary">Pending</div>
+                                        <div class="badge badge-sa-primary">{{ __('dashboard.pending') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/IT.png" class="sa-language-icon d-block" alt
-                                        title="Italy"></td>
+                                        title="{{ __('dashboard.italy') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -315,11 +301,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00513</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-warning">Hold</div>
+                                        <div class="badge badge-sa-warning">{{ __('dashboard.sale_status_hold') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/DE.png" class="sa-language-icon d-block" alt
-                                        title="Germany"></td>
+                                        title="{{ __('dashboard.germany') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -336,11 +322,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00507</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-primary">Pending</div>
+                                        <div class="badge badge-sa-primary">{{ __('dashboard.pending') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/IT.png" class="sa-language-icon d-block" alt
-                                        title="Italy"></td>
+                                        title="{{ __('dashboard.italy') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -357,11 +343,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00104</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-danger">Canceled</div>
+                                        <div class="badge badge-sa-danger">{{ __('dashboard.sale_status_cancelled') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/US.png" class="sa-language-icon d-block" alt
-                                        title="USA"></td>
+                                        title="{{ __('dashboard.usa') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -378,11 +364,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00097</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-success">Completed</div>
+                                        <div class="badge badge-sa-success">{{ __('dashboard.completed') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/CO.png" class="sa-language-icon d-block" alt
-                                        title="Columbia"></td>
+                                        title="{{ __('dashboard.colombia') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -399,11 +385,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00082</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-success">Completed</div>
+                                        <div class="badge badge-sa-success">{{ __('dashboard.completed') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/RS.png" class="sa-language-icon d-block" alt
-                                        title="Srbija"></td>
+                                        title="{{ __('dashboard.serbia') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -420,11 +406,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00063</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-primary">Pending</div>
+                                        <div class="badge badge-sa-primary">{{ __('dashboard.pending') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/FR.png" class="sa-language-icon d-block" alt
-                                        title="France"></td>
+                                        title="{{ __('dashboard.france') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -441,11 +427,11 @@
                                 <td><a href="app-order.html" class="text-reset">#00012</a></td>
                                 <td>
                                     <div class="d-flex fs-6">
-                                        <div class="badge badge-sa-success">Completed</div>
+                                        <div class="badge badge-sa-success">{{ __('dashboard.completed') }}</div>
                                     </div>
                                 </td>
                                 <td><img src="vendor/flag-icons/24/RU.png" class="sa-language-icon d-block" alt
-                                        title="Russia"></td>
+                                        title="{{ __('dashboard.russia') }}"></td>
                                 <td>
                                     <div class="d-flex align-items-center"><a href="app-customer.html"
                                             class="sa-symbol sa-symbol--shape--circle sa-symbol--size--md me-3">
@@ -468,24 +454,23 @@
                 data-sa-data="[{&quot;label&quot;:&quot;Yandex&quot;,&quot;value&quot;:2742,&quot;color&quot;:&quot;#ffd333&quot;,&quot;orders&quot;:12},{&quot;label&quot;:&quot;YouTube&quot;,&quot;value&quot;:3272,&quot;color&quot;:&quot;#e62e2e&quot;,&quot;orders&quot;:51},{&quot;label&quot;:&quot;Google&quot;,&quot;value&quot;:2303,&quot;color&quot;:&quot;#3377ff&quot;,&quot;orders&quot;:4},{&quot;label&quot;:&quot;Facebook&quot;,&quot;value&quot;:1434,&quot;color&quot;:&quot;#29cccc&quot;,&quot;orders&quot;:10},{&quot;label&quot;:&quot;Instagram&quot;,&quot;value&quot;:799,&quot;color&quot;:&quot;#5dc728&quot;,&quot;orders&quot;:1}]"
                 data-sa-container-query="{&quot;600&quot;:&quot;saw-chart-circle--size--lg&quot;}">
                 <div class="sa-widget-header saw-chart-circle__header">
-                    <h2 class="sa-widget-header__title">Sales
-                        by traffic source</h2>
+                    <h2 class="sa-widget-header__title">{{ __('dashboard.sales_by_traffic_source') }}</h2>
                     <div class="sa-widget-header__actions">
                         <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                 id="widget-context-menu-7" data-bs-toggle="dropdown" aria-expanded="false"
-                                aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
+                                aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3" height="13"
                                     fill="currentColor">
                                     <path
                                         d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                     </path>
                                 </svg></button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-7">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Move</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -498,9 +483,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Source</th>
-                                <th class="text-center">Orders</th>
-                                <th class="text-end">Amount</th>
+                                <th>{{ __('dashboard.source') }}</th>
+                                <th class="text-center">{{ __('dashboard.orders') }}</th>
+                                <th class="text-end">{{ __('dashboard.amount') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -588,24 +573,23 @@
             <div class="card flex-grow-1">
                 <div class="card-body">
                     <div class="sa-widget-header mb-4">
-                        <h2 class="sa-widget-header__title">Recent
-                            activity</h2>
+                        <h2 class="sa-widget-header__title">{{ __('dashboard.recent_activity') }}</h2>
                         <div class="sa-widget-header__actions">
                             <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                     id="widget-context-menu-8" data-bs-toggle="dropdown" aria-expanded="false"
-                                    aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3"
+                                    aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3"
                                         height="13" fill="currentColor">
                                         <path
                                             d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                         </path>
                                     </svg></button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-8">
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                                    <li><a class="dropdown-item" href="#">Move</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                    <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -614,51 +598,20 @@
                     <div class="sa-timeline mb-n2 pt-2">
                         <ul class="sa-timeline__list">
                             <li class="sa-timeline__item">
-                                <div class="sa-timeline__item-title">Yesterday</div>
-                                <div class="sa-timeline__item-content">Phasellus
-                                    id mattis nulla. Mauris
-                                    velit nisi, imperdiet
-                                    vitae sodales in,
-                                    maximus ut lectus.
-                                    Vivamus commodo
-                                    scelerisque lacus, at
-                                    porttitor dui iaculis
-                                    id. <a href="#">Curabitur
-                                        imperdiet ultrices
-                                        fermentum.</a></div>
+                                <div class="sa-timeline__item-title">{{ __('dashboard.yesterday') }}</div>
+                                <div class="sa-timeline__item-content">{{ __('dashboard.activity_one') }} <a href="#">{{ __('dashboard.activity_one_link') }}</a></div>
                             </li>
                             <li class="sa-timeline__item">
-                                <div class="sa-timeline__item-title">5
-                                    days ago</div>
-                                <div class="sa-timeline__item-content">Nulla
-                                    ut ex mollis, volutpat
-                                    tellus vitae, accumsan
-                                    ligula. <a href="#">Curabitur
-                                        imperdiet ultrices
-                                        fermentum.</a></div>
+                                <div class="sa-timeline__item-title">{{ __('dashboard.five_days_ago') }}</div>
+                                <div class="sa-timeline__item-content">{{ __('dashboard.activity_two') }} <a href="#">{{ __('dashboard.activity_two_link') }}</a></div>
                             </li>
                             <li class="sa-timeline__item">
-                                <div class="sa-timeline__item-title">March
-                                    27</div>
-                                <div class="sa-timeline__item-content">Donec
-                                    tempor sapien et
-                                    fringilla facilisis. Nam
-                                    maximus consectetur
-                                    diam.</div>
+                                <div class="sa-timeline__item-title">{{ __('dashboard.march_27') }}</div>
+                                <div class="sa-timeline__item-content">{{ __('dashboard.activity_three') }}</div>
                             </li>
                             <li class="sa-timeline__item">
-                                <div class="sa-timeline__item-title">November
-                                    30</div>
-                                <div class="sa-timeline__item-content">Many
-                                    philosophical debates
-                                    that began in ancient
-                                    times are still debated
-                                    today. In one general
-                                    sense, philosophy is
-                                    associated with wisdom,
-                                    intellectual culture and
-                                    a search for
-                                    knowledge.</div>
+                                <div class="sa-timeline__item-title">{{ __('dashboard.november_30') }}</div>
+                                <div class="sa-timeline__item-content">{{ __('dashboard.activity_four') }}</div>
                             </li>
                         </ul>
                     </div>
@@ -669,24 +622,23 @@
             <div class="card flex-grow-1">
                 <div class="card-body">
                     <div class="sa-widget-header">
-                        <h2 class="sa-widget-header__title">Recent
-                            reviews</h2>
+                        <h2 class="sa-widget-header__title">{{ __('dashboard.recent_reviews') }}</h2>
                         <div class="sa-widget-header__actions">
                             <div class="dropdown"><button type="button" class="btn btn-sm btn-sa-muted d-block"
                                     id="widget-context-menu-9" data-bs-toggle="dropdown" aria-expanded="false"
-                                    aria-label="More"><svg xmlns="http://www.w3.org/2000/svg" width="3"
+                                    aria-label="{{ __('dashboard.more') }}"><svg xmlns="http://www.w3.org/2000/svg" width="3"
                                         height="13" fill="currentColor">
                                         <path
                                             d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
                                         </path>
                                     </svg></button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="widget-context-menu-9">
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
-                                    <li><a class="dropdown-item" href="#">Move</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ __('dashboard.settings') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ __('dashboard.move') }}</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item text-danger" href="#">Remove</a>
+                                    <li><a class="dropdown-item text-danger" href="#">{{ __('dashboard.remove') }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -704,8 +656,8 @@
                                 <div class="col"><a href="app-product.html" class="text-reset fs-exact-14">Wiper
                                         Blades Brandix
                                         WL2</a>
-                                    <div class="text-muted fs-exact-13">Reviewed
-                                        by <a href="app-customer.html" class="text-reset">Ryan
+                                    <div class="text-muted fs-exact-13">{{ __('dashboard.reviewed_by') }}
+                                        <a href="app-customer.html" class="text-reset">Ryan
                                             Ford</a></div>
                                 </div>
                                 <div class="col-12 col-sm-auto">
@@ -727,8 +679,8 @@
                                         Planer Brandix
                                         KL370090G 300
                                         Watts</a>
-                                    <div class="text-muted fs-exact-13">Reviewed
-                                        by <a href="app-customer.html" class="text-reset">Adam
+                                    <div class="text-muted fs-exact-13">{{ __('dashboard.reviewed_by') }}
+                                        <a href="app-customer.html" class="text-reset">Adam
                                             Taylor</a></div>
                                 </div>
                                 <div class="col-12 col-sm-auto">
@@ -748,8 +700,8 @@
                             <div class="d-flex align-items-center flex-grow-1 flex-wrap">
                                 <div class="col"><a href="app-product.html" class="text-reset fs-exact-14">Water
                                         Tap</a>
-                                    <div class="text-muted fs-exact-13">Reviewed
-                                        by <a href="app-customer.html" class="text-reset">Jessica
+                                    <div class="text-muted fs-exact-13">{{ __('dashboard.reviewed_by') }}
+                                        <a href="app-customer.html" class="text-reset">Jessica
                                             Moore</a></div>
                                 </div>
                                 <div class="col-12 col-sm-auto">
@@ -770,8 +722,8 @@
                                 <div class="col"><a href="app-product.html" class="text-reset fs-exact-14">Brandix
                                         Router Power Tool
                                         2017ERXPK</a>
-                                    <div class="text-muted fs-exact-13">Reviewed
-                                        by <a href="app-customer.html" class="text-reset">Helena
+                                    <div class="text-muted fs-exact-13">{{ __('dashboard.reviewed_by') }}
+                                        <a href="app-customer.html" class="text-reset">Helena
                                             Garcia</a></div>
                                 </div>
                                 <div class="col-12 col-sm-auto">
@@ -793,8 +745,8 @@
                                         Tool IRadix
                                         DPS3000SY 2700
                                         Watts</a>
-                                    <div class="text-muted fs-exact-13">Reviewed
-                                        by <a href="app-customer.html" class="text-reset">Ryan
+                                    <div class="text-muted fs-exact-13">{{ __('dashboard.reviewed_by') }}
+                                        <a href="app-customer.html" class="text-reset">Ryan
                                             Ford</a></div>
                                 </div>
                                 <div class="col-12 col-sm-auto">
@@ -815,8 +767,8 @@
                                 <div class="col"><a href="app-product.html" class="text-reset fs-exact-14">Brandix
                                         Screwdriver
                                         SCREW150</a>
-                                    <div class="text-muted fs-exact-13">Reviewed
-                                        by <a href="app-customer.html" class="text-reset">Charlotte
+                                    <div class="text-muted fs-exact-13">{{ __('dashboard.reviewed_by') }}
+                                        <a href="app-customer.html" class="text-reset">Charlotte
                                             Jones</a></div>
                                 </div>
                                 <div class="col-12 col-sm-auto">

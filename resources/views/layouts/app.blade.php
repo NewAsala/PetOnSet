@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl" data-scompiler-id="0">
+<html lang="{{ app()->getLocale() }}" dir="{{ config('localization.locales.'.app()->getLocale().'.direction') }}" data-scompiler-id="0">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <title>Pet On Set Dashboard</title>
+    <title>{{ __('Pet On Set Dashboard') }}</title>
     <!-- icon -->
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- fonts -->
@@ -21,6 +21,8 @@
     <link rel="stylesheet" href={{ asset('vendor/nouislider/nouislider.min.css') }}>
     <link rel="stylesheet" href={{ asset('vendor/fullcalendar/main.min.css') }}>
     <link rel="stylesheet" href={{ asset('css/style.css') }}>
+    <link rel="stylesheet" href={{ asset('css/sidebar.css') }}>
+    <link rel="stylesheet" href={{ asset('css/ltr.css') }}>
     <link rel="stylesheet" href={{ asset('css/image-upload.css') }}>
     <link rel="stylesheet" href={{ asset('css/print.css') }}>
     <script async src={{ asset('gtag/js?id=UA-97489509-8') }}></script>
@@ -72,7 +74,11 @@
     <script src={{ asset('vendor/highlight.js/highlight.pack.js') }}></script>
     <script src={{ asset('vendor/quill/quill.min.js') }}></script>
     <script src={{ asset('vendor/air-datepicker/js/datepicker.min.js') }}></script>
-    <script src={{ asset('vendor/air-datepicker/js/i18n/datepicker.en.js') }}></script>
+    @if (app()->getLocale() === 'ar')
+        <script src="{{ asset('js/datepicker.ar.js') }}"></script>
+    @else
+        <script src="{{ asset('vendor/air-datepicker/js/i18n/datepicker.en.js') }}"></script>
+    @endif
     <script src={{ asset('vendor/select2/js/select2.min.js') }}></script>
     <script src={{ asset('vendor/fontawesome/js/all.min.js') }} data-auto-replace-svg async></script>
     <script src={{ asset('vendor/chart.js/chart.min.js') }}></script>
@@ -112,12 +118,12 @@
                             <i class="bi bi-x-circle me-2"></i>
                         @endif
 
-                        {{ $message }}
+                        {{ __($message) }}
                     </div>
 
                     <button
                         type="button"
-                        class="btn-close btn-close-white me-2 m-auto"
+                        class="btn-close btn-close-white m-auto"
                         data-bs-dismiss="toast"
                         aria-label="Close">
                     </button>

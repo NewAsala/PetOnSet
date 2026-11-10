@@ -8,7 +8,7 @@
 
     $breadcrumbItems = [
         [
-            'label' => 'Pets',
+            'label' => __('dashboard.pets'),
         ],
     ];
 @endphp
@@ -24,14 +24,14 @@
                 'items' => $breadcrumbItems
             ])
 
-            <h1 class="h3 m-0">Pets</h1>
+            <h1 class="h3 m-0">{{ __('dashboard.pets') }}</h1>
 
         </div>
 
         <div class="col-auto d-flex">
 
             <a href="{{ route('pet.create') }}" class="btn btn-primary">
-                New pet
+                {{ __('dashboard.new_pet') }}
             </a>
 
         </div>
@@ -47,7 +47,7 @@
 
         <input
             type="text"
-            placeholder="Start typing to search for pets"
+            placeholder="{{ __('dashboard.search_pets') }}"
             class="form-control form-control--search mx-auto"
             id="table-search"
         />
@@ -71,36 +71,36 @@
                     <input
                         type="checkbox"
                         class="form-check-input m-0 fs-exact-16 d-block"
-                        aria-label="Select all"
+                        aria-label="{{ __('dashboard.select_all') }}"
                     />
                 </th>
 
                 <th class="min-w-15x">
-                    Pet Name
+                    {{ __('dashboard.pet_name') }}
                 </th>
 
                 <th>
-                    Type
+                    {{ __('dashboard.type') }}
                 </th>
 
                 <th>
-                    Gender
+                    {{ __('dashboard.gender') }}
                 </th>
 
                 <th>
-                    Age
+                    {{ __('dashboard.age') }}
                 </th>
 
                 <th>
-                    Weight
+                    {{ __('dashboard.weight') }}
                 </th>
 
                 <th>
-                    Customer
+                    {{ __('dashboard.customer') }}
                 </th>
 
                 <th>
-                    Created
+                    {{ __('dashboard.created') }}
                 </th>
 
                 <th class="w-min" data-orderable="false"></th>
@@ -123,7 +123,7 @@
                         <input
                             type="checkbox"
                             class="form-check-input m-0 fs-exact-16 d-block"
-                            aria-label="Select pet"
+                            aria-label="{{ __('dashboard.select_pet') }}"
                         />
 
                     </td>
@@ -158,7 +158,7 @@
 
                         @if ($pet->type)
 
-                            {{ $pet->type->value }}
+                            {{ __('dashboard.' . strtolower($pet->type->value)) }}
 
                         @else
 
@@ -175,7 +175,7 @@
 
                         @if ($pet->gender)
 
-                            {{ $pet->gender->value }}
+                            {{ __('dashboard.' . strtolower($pet->gender->value)) }}
 
                         @else
 
@@ -193,7 +193,7 @@
                         @if ($pet->age !== null)
 
                             {{ $pet->age }}
-                            {{ $pet->age == 1 ? 'year' : 'years' }}
+                            {{ __('dashboard.' . ($pet->age == 1 ? 'year' : 'years')) }}
 
                         @else
 
@@ -210,7 +210,7 @@
 
                         @if ($pet->weight !== null)
 
-                            {{ number_format($pet->weight, 2) }} kg
+                            {{ number_format($pet->weight, 2) }} {{ __('dashboard.kilogram_abbreviation') }}
 
                         @else
 
@@ -263,7 +263,7 @@
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                aria-label="More"
+                                aria-label="{{ __('dashboard.more') }}"
                             >
 
                                 <svg
@@ -292,7 +292,7 @@
                                         class="dropdown-item"
                                         href="{{ route('pet.edit', $pet) }}"
                                     >
-                                        Edit
+                                        {{ __('dashboard.edit') }}
                                     </a>
 
                                 </li>
@@ -317,7 +317,7 @@
                                         data-delete-url="{{ route('pet.destroy', $pet) }}"
                                         data-delete-name="{{ $pet->name }}"
                                     >
-                                        Delete
+                                        {{ __('dashboard.delete') }}
                                     </button>
 
                                 </li>
@@ -338,7 +338,7 @@
                         colspan="9"
                         class="text-center py-5 text-muted"
                     >
-                        No pets found.
+                        {{ __('dashboard.pets_empty') }}
                     </td>
 
                 </tr>

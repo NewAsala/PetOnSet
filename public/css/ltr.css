@@ -1,0 +1,17 @@
+html[dir="ltr"] .breadcrumb-item + .breadcrumb-item {
+    padding-right: 0;
+    padding-left: 0.5rem;
+}
+
+html[dir="ltr"] .breadcrumb-item + .breadcrumb-item::before {
+    float: left;
+    padding-right: 0.5rem;
+    padding-left: 0;
+}
+html[dir="ltr"] dd {
+    margin-bottom: 0.php5rem;
+    margin-left: 0;
+}
+html[dir="ltr"] .text-start {
+    text-align: left !important;
+}

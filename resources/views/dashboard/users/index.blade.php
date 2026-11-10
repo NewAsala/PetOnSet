@@ -5,7 +5,7 @@
 @php
     $breadcrumbItems = [
         [
-            'label' => 'Users',
+            'label' => __('dashboard.users'),
         ],
     ];
 @endphp
@@ -21,7 +21,7 @@
             ])
 
             <h1 class="h3 m-0">
-                Users
+                {{ __('dashboard.users') }}
             </h1>
 
         </div>
@@ -32,7 +32,7 @@
                 href="{{ route('user.create') }}"
                 class="btn btn-primary"
             >
-                New user
+                {{ __('dashboard.new_user') }}
             </a>
 
         </div>
@@ -47,7 +47,7 @@
 
         <input
             type="text"
-            placeholder="Start typing to search for users"
+            placeholder="{{ __('dashboard.search_users') }}"
             class="form-control form-control--search mx-auto"
             id="table-search"
         />
@@ -73,24 +73,24 @@
                     <input
                         type="checkbox"
                         class="form-check-input m-0 fs-exact-16 d-block"
-                        aria-label="Select all"
+                        aria-label="{{ __('dashboard.select_all') }}"
                     />
                 </th>
 
                 <th class="min-w-20x">
-                    Name
+                    {{ __('dashboard.name') }}
                 </th>
 
                 <th>
-                    Phone
+                    {{ __('dashboard.phone') }}
                 </th>
 
                 <th>
-                    Role
+                    {{ __('dashboard.role') }}
                 </th>
 
                 <th>
-                    Registered
+                    {{ __('dashboard.registered') }}
                 </th>
 
                 <th
@@ -114,7 +114,7 @@
                         <input
                             type="checkbox"
                             class="form-check-input m-0 fs-exact-16 d-block"
-                            aria-label="Select user"
+                            aria-label="{{ __('dashboard.select_user') }}"
                         />
 
                     </td>
@@ -160,7 +160,7 @@
                         @empty
 
                             <span class="text-muted">
-                                No role
+                                {{ __('dashboard.no_role') }}
                             </span>
 
                         @endforelse
@@ -185,7 +185,7 @@
                                 id="user-context-menu-{{ $user->id }}"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                aria-label="More"
+                                aria-label="{{ __('dashboard.more') }}"
                             >
 
                                 <svg
@@ -215,7 +215,7 @@
                                         class="dropdown-item"
                                         href="{{ route('user.edit', ['user' => $user->id]) }}"
                                     >
-                                        Edit
+                                        {{ __('dashboard.edit') }}
                                     </a>
 
                                 </li>
@@ -239,16 +239,16 @@
                                             data-delete-url="{{ route('user.destroy', $user) }}"
                                             data-delete-name="{{ $user->name }}"
                                         >
-                                            Delete
+                                            {{ __('dashboard.delete') }}
                                         </button>
 
                                     @else
 
                                         <span
                                             class="dropdown-item text-muted"
-                                            title="You cannot delete your own account"
+                                            title="{{ __('dashboard.cannot_delete_own_account') }}"
                                         >
-                                            Delete
+                                            {{ __('dashboard.delete') }}
                                         </span>
 
                                     @endif

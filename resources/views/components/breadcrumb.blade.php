@@ -3,7 +3,7 @@
 
         <li class="breadcrumb-item">
             <a href="{{ route('dashboard') }}">
-                Dashboard
+                {{ __('Dashboard') }}
             </a>
         </li>
 
@@ -12,12 +12,12 @@
             @if (isset($item['url']) && !$loop->last)
                 <li class="breadcrumb-item">
                     <a href="{{ $item['url'] }}">
-                        {{ $item['label'] }}
+                        {{ __($item['label']) }}
                     </a>
                 </li>
             @else
                 <li class="breadcrumb-item active" aria-current="page">
-                    {{ $item['label'] }}
+                    {{ __($item['label']) }}
                 </li>
             @endif
 

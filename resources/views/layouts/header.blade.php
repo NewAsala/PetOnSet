@@ -1,7 +1,7 @@
 <div class="sa-toolbar sa-toolbar--search-hidden sa-app__toolbar">
     <div class="sa-toolbar__body">
         <div class="sa-toolbar__item">
-            <button class="sa-toolbar__button" type="button" aria-label="Menu"
+            <button class="sa-toolbar__button" type="button" aria-label="{{ __('Menu') }}"
                 data-sa-toggle-sidebar>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                     viewbox="0 0 20 20" fill="currentColor">
@@ -12,7 +12,7 @@
         <div class="sa-toolbar__item sa-toolbar__item--search">
             <form class="sa-search sa-search--state--pending">
                 <div class="sa-search__body">
-                    <label class="visually-hidden" for="input-search">Search for:</label>
+                    <label class="visually-hidden" for="input-search">{{ __('Search for:') }}</label>
                     <div class="sa-search__icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                             viewbox="0 0 16 16" fill="currentColor">
@@ -21,8 +21,8 @@
                             </path>
                         </svg>
                     </div>
-                    <input type="text" id="input-search" class="sa-search__input" placeholder="Search for the truth" autocomplete="off">
-                        <button class="sa-search__cancel d-sm-none" type="button" aria-label="Close search">
+                    <input type="text" id="input-search" class="sa-search__input" placeholder="{{ __('Search for the truth') }}" autocomplete="off">
+                        <button class="sa-search__cancel d-sm-none" type="button" aria-label="{{ __('Close search') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="currentColor">
                             <path
                                 d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6 c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L6,4.6l3.4-3.4c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L7.4,6l3.4,3.4 C11.2,9.8,11.2,10.4,10.8,10.8z">
@@ -36,18 +36,13 @@
                     <div class="sa-search__dropdown-wrapper">
                         <div class="sa-search__suggestions sa-suggestions"></div>
                         <div class="sa-search__help sa-search__help--type--no-results">
-                            <div class="sa-search__help-title">No
-                                results for &quot;<span class="sa-search__query"></span>&quot;</div>
-                            <div class="sa-search__help-subtitle">Make
-                                sure that all words are spelled
-                                correctly.</div>
+                            <div class="sa-search__help-title">{{ __('No results for') }}
+                                &quot;<span class="sa-search__query"></span>&quot;</div>
+                            <div class="sa-search__help-subtitle">{{ __('Make sure that all words are spelled correctly.') }}</div>
                         </div>
                         <div class="sa-search__help sa-search__help--type--greeting">
-                            <div class="sa-search__help-title">Start
-                                typing to search for</div>
-                            <div class="sa-search__help-subtitle">Products,
-                                orders, customers, actions,
-                                etc.</div>
+                            <div class="sa-search__help-title">{{ __('Start typing to search for') }}</div>
+                            <div class="sa-search__help-subtitle">{{ __('Products, orders, customers, actions, etc.') }}</div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +51,7 @@
         </div>
         <div class="mx-auto"></div>
         <div class="sa-toolbar__item d-sm-none">
-            <button class="sa-toolbar__button" type="button" aria-label="Show search" data-sa-action="show-search">
+            <button class="sa-toolbar__button" type="button" aria-label="{{ __('Show search') }}" data-sa-action="show-search">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     width="1em" height="1em" viewbox="0 0 16 16" fill="currentColor">
                     <path
@@ -67,20 +62,27 @@
         </div>
         <div class="sa-toolbar__item dropdown">
             <button class="sa-toolbar__button" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" data-bs-reference="parent" data-bs-offset="0,1" aria-expanded="false">
-                <img src="{{ asset('vendor/flag-icons/24/GB.png') }}" class="sa-language-icon" alt>
+                <img src="{{ asset('vendor/flag-icons/24/'.config('localization.locales.'.app()->getLocale().'.flag')) }}" class="sa-language-icon" alt="{{ config('localization.locales.'.app()->getLocale().'.name') }}">
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
-                <li>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
-                        <img src="{{ asset('vendor/flag-icons/24/LB.png') }}" class="sa-language-icon me-3" alt>
-                        <span class="ps-2">Arabic</span>
-                    </a>
-                </li>
-                <li><a class="dropdown-item d-flex align-items-center" href="#">
-                        <img src="{{ asset('vendor/flag-icons/24/GB.png') }}" class="sa-language-icon me-3" alt>
-                        <span class="ps-2">English</span>
-                    </a>
-                </li>
+                @php
+                    $localizedPath = request()->segments();
+                    array_shift($localizedPath);
+                    $localizedPath = implode('/', $localizedPath);
+                    $queryString = request()->getQueryString();
+                @endphp
+                @foreach (config('localization.locales') as $locale => $language)
+                    <li>
+                        <a
+                            href="{{ url($locale.($localizedPath !== '' ? '/'.$localizedPath : '').($queryString ? '?'.$queryString : '')) }}"
+                            class="dropdown-item d-flex align-items-center {{ app()->getLocale() === $locale ? 'active' : '' }}"
+                            @if (app()->getLocale() === $locale) aria-current="true" @endif
+                        >
+                                <img src="{{ asset('vendor/flag-icons/24/'.$language['flag']) }}" class="sa-language-icon mx-3" alt="">
+                                <span class="ps-2">{{ __($language['name']) }}</span>
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
         {{-- <div class="sa-toolbar__item dropdown"> {{--  notifications 
@@ -97,8 +99,8 @@
             <div class="dropdown-menu dropdown-menu-end py-0" aria-labelledby="dropdownMenuButton2">
                 <div class="sa-notifications">
                     <div class="sa-notifications__header">
-                        <div class="sa-notifications__header-title">Notifications</div><a
-                            class="sa-notifications__header-action" href>Mark All as Read</a>
+                        <div class="sa-notifications__header-title">{{ __('Notifications') }}</div><a
+                            class="sa-notifications__header-action" href>{{ __('Mark All as Read') }}</a>
                     </div>
                     <ul class="sa-notifications__list">
                         <li class="sa-notifications__item"><a href="#" class="sa-notifications__item-button">
@@ -139,14 +141,10 @@
                                 </div>
                                 <div class="sa-notifications__item-body">
                                     <div class="sa-notifications__item-title sa-notifications__item-title--nowrap">
-                                        Creating
-                                        a backup in the
-                                        process</div>
+                                        {{ __('Creating a backup') }}</div>
                                     <div
                                         class="sa-notifications__item-subtitle sa-notifications__item-subtitle--nowrap">
-                                        Completed:
-                                        37% (23.05
-                                        MB)</div>
+                                        {{ __('Completed:') }} 37% (23.05 MB)</div>
                                 </div>
                             </a></li>
                         <li class="sa-notifications__item"><a href="#" class="sa-notifications__item-button">
@@ -163,8 +161,7 @@
                                 </div>
                                 <div class="sa-notifications__item-body">
                                     <div class="sa-notifications__item-title sa-notifications__item-title--nowrap">
-                                        Product
-                                        added to cart</div>
+                                        {{ __('Product added to cart') }}</div>
                                     <div
                                         class="sa-notifications__item-subtitle sa-notifications__item-subtitle--nowrap">
                                         Drill
@@ -187,14 +184,10 @@
                                 </div>
                                 <div class="sa-notifications__item-body">
                                     <div class="sa-notifications__item-title sa-notifications__item-title--nowrap">
-                                        Customer
-                                        Ryan Ford says</div>
+                                        {{ __('Customer says') }}</div>
                                     <div
                                         class="sa-notifications__item-subtitle sa-notifications__item-subtitle--nowrap">
-                                        What
-                                        is a screen dimension of
-                                        Brandix Series B
-                                        monitor?</div>
+                                        {{ __('What is the screen size of') }} Brandix Series B {{ __('monitor?') }}</div>
                                 </div>
                             </a></li>
                     </ul>
@@ -215,9 +208,9 @@
                 </span>
             </button>
             <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a></li>
-                <li><a class="dropdown-item" href="{{ route('password.edit') }}">Edit Password</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit Profile') }}</a></li>
+                <li><a class="dropdown-item" href="{{ route('password.edit') }}">{{ __('Edit Password') }}</a></li>
+                <li><a class="dropdown-item" href="#">{{ __('Settings') }}</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -229,7 +222,7 @@
                             type="submit"
                             class="dropdown-item"
                         >
-                            Sign Out
+                            {{ __('Sign Out') }}
                         </button>
                     </form>
                 </li>            

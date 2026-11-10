@@ -153,13 +153,13 @@ class PurchaseController extends Controller
 
         if ($discount > $subtotal) {
             throw ValidationException::withMessages([
-                'discount' => 'The discount cannot exceed the subtotal.',
+                'discount' => __('The discount cannot exceed the subtotal.'),
             ]);
         }
 
         if ($paid > $total) {
             throw ValidationException::withMessages([
-                'paid' => 'The paid amount cannot exceed the purchase total.',
+                'paid' => __('The paid amount cannot exceed the purchase total.'),
             ]);
         }
 
@@ -364,7 +364,7 @@ class PurchaseController extends Controller
             if ($batches->isEmpty()) {
                 throw ValidationException::withMessages([
                     'purchase' =>
-                        'This purchase cannot be changed because a batch is missing.',
+                        __('This purchase cannot be changed because a batch is missing.'),
                 ]);
             }
 
@@ -372,7 +372,7 @@ class PurchaseController extends Controller
             if ((int) $batches->sum('quantity') !== (int) $item->quantity) {
                 throw ValidationException::withMessages([
                     'purchase' =>
-                        'This purchase cannot be changed because its stock has already changed.',
+                        __('This purchase cannot be changed because its stock has already changed.'),
                 ]);
             }
 
@@ -392,7 +392,7 @@ class PurchaseController extends Controller
                 if ($hasOtherMovement) {
                     throw ValidationException::withMessages([
                         'purchase' =>
-                            'This purchase cannot be changed because one of its batches has subsequent stock movements.',
+                            __('This purchase cannot be changed because one of its batches has subsequent stock movements.'),
                     ]);
                 }
 
@@ -409,7 +409,7 @@ class PurchaseController extends Controller
                 if ((int) $receivedQuantity !== (int) $batch->quantity) {
                     throw ValidationException::withMessages([
                         'purchase' =>
-                            'The original stock movement does not match the batch quantity.',
+                            __('The original stock movement does not match the batch quantity.'),
                     ]);
                 }
             }

@@ -3,11 +3,11 @@
     @php
         $breadcrumbItems = [
             [
-                'label' => 'Suppliers',
+                'label' => __('dashboard.suppliers'),
                 'url' => route('supplier.index'),
             ],
             [
-                'label' => 'Supplier Details',
+                'label' => __('dashboard.supplier_details'),
             ],
         ];
     @endphp
@@ -27,12 +27,12 @@
                     data-delete-url="{{ route('supplier.destroy', $supplier) }}"
                     data-delete-name="{{ $supplier->name }}"
                 >
-                    Delete
+                    {{ __('dashboard.delete') }}
                 </button>
-                <a href="{{ route('supplier.edit', ['supplier' => $supplier->id]) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('supplier.edit', ['supplier' => $supplier->id]) }}" class="btn btn-primary">{{ __('dashboard.edit') }}</a>
             </div>
             {{-- <div class="col-auto d-flex">
-            <a href="{{ route('supplier.create') }}" class="btn btn-primary">New supplier</a>
+            <a href="{{ route('supplier.create') }}" class="btn btn-primary">{{ __('dashboard.new_supplier') }}</a>
         </div> --}}
         </div>
     </div>
@@ -58,21 +58,21 @@
                         <div class="sa-divider my-5"></div>
                         <div class="w-100">
                             <dl class="list-unstyled m-0">
-                                <dt class="fs-exact-14 fw-medium">Last Order</dt>
-                                <dd class="fs-exact-13 text-muted mb-0 mt-1">7 days ago – <a
+                                <dt class="fs-exact-14 fw-medium">{{ __('dashboard.last_order') }}</dt>
+                                <dd class="fs-exact-13 text-muted mb-0 mt-1">{{ __('dashboard.seven_days_ago') }} – <a
                                         href="app-order.html">#80294</a></dd>
                             </dl>
                             <dl class="list-unstyled m-0 mt-4">
-                                <dt class="fs-exact-14 fw-medium">Average Order Value</dt>
+                                <dt class="fs-exact-14 fw-medium">{{ __('dashboard.average_order_value') }}</dt>
                                 <dd class="fs-exact-13 text-muted mb-0 mt-1">$574.00</dd>
                             </dl>
                             <dl class="list-unstyled m-0 mt-4">
-                                <dt class="fs-exact-14 fw-medium">Registered</dt>
+                                <dt class="fs-exact-14 fw-medium">{{ __('dashboard.registered') }}</dt>
                                 <dd class="fs-exact-13 text-muted mb-0 mt-1">{{$supplier->created_at->format('F j, Y')}}</dd>
                             </dl>
                             <dl class="list-unstyled m-0 mt-4">
-                                <dt class="fs-exact-14 fw-medium">Email Marketing</dt>
-                                <dd class="fs-exact-13 text-muted mb-0 mt-1">Subscribed</dd>
+                                <dt class="fs-exact-14 fw-medium">{{ __('dashboard.email_marketing') }}</dt>
+                                <dd class="fs-exact-13 text-muted mb-0 mt-1">{{ __('dashboard.subscribed') }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
             </div>
             <div class="sa-entity-layout__main">
                 {{-- <div class="sa-card-area">
-                    <textarea class="sa-card-area__area" rows="2" placeholder="Notes about customer"></textarea>
+                    <textarea class="sa-card-area__area" rows="2" placeholder="{{ __('dashboard.additional_information') }}"></textarea>
                     <div class="sa-card-area__card"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-edit">
@@ -92,51 +92,49 @@
                 </div> --}}
                 <div class="card"> {{-- mt-5 --}}
                     <div class="card-body px-5 py-4 d-flex align-items-center justify-content-between">
-                        <h2 class="mb-0 fs-exact-18 me-4">Orders</h2>
-                        <div class="text-muted fs-exact-14 text-end">Total spent $34,980.34 on 7
-                            orders</div>
+                        <h2 class="mb-0 fs-exact-18 me-4">{{ __('dashboard.orders') }}</h2>
+                        <div class="text-muted fs-exact-14 text-end">{{ __('dashboard.total_spent_summary', ['amount' => '$34,980.34', 'count' => 7]) }}</div>
                     </div>
                     <div class="table-responsive">
                         <table class="sa-table text-nowrap">
                             <tbody>
                                 <tr>
                                     <td><a href="app-order.html">#80294</a></td>
-                                    <td>Today at 6:10 pm</td>
-                                    <td>Pending</td>
-                                    <td>4 items</td>
+                                    <td>{{ __('dashboard.today_at') }}</td>
+                                    <td>{{ __('dashboard.pending') }}</td>
+                                    <td>{{ __('dashboard.four_items') }}</td>
                                     <td>$320.00</td>
                                 </tr>
                                 <tr>
                                     <td><a href="app-order.html">#63736</a></td>
-                                    <td>May 15, 2019</td>
-                                    <td>Completed</td>
-                                    <td>7 items</td>
+                                    <td>{{ __('dashboard.may_15_2019') }}</td>
+                                    <td>{{ __('dashboard.completed') }}</td>
+                                    <td>{{ __('dashboard.seven_items') }}</td>
                                     <td>$2,574.31</td>
                                 </tr>
                                 <tr>
                                     <td><a href="app-order.html">#63501</a></td>
-                                    <td>January 7, 2019</td>
-                                    <td>Completed</td>
-                                    <td>1 items</td>
+                                    <td>{{ __('dashboard.january_7_2019') }}</td>
+                                    <td>{{ __('dashboard.completed') }}</td>
+                                    <td>{{ __('dashboard.one_item') }}</td>
                                     <td>$34.00</td>
                                 </tr>
                                 <tr>
                                     <td><a href="app-order.html">#40278</a></td>
-                                    <td>October 19, 2018</td>
-                                    <td>Completed</td>
-                                    <td>2 items</td>
+                                    <td>{{ __('dashboard.october_19_2018') }}</td>
+                                    <td>{{ __('dashboard.completed') }}</td>
+                                    <td>{{ __('dashboard.two_items') }}</td>
                                     <td>$704.00</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="sa-divider"></div>
-                    <div class="px-5 py-4 text-center"><a href="app-orders-list.html">View all 7
-                            orders</a></div>
+                    <div class="px-5 py-4 text-center"><a href="app-orders-list.html">{{ __('dashboard.view_all_orders') }}</a></div>
                 </div>
                 <div class="card mt-5">
                     <div class="card-body px-5 py-4 d-flex align-items-center justify-content-between">
-                        <h2 class="mb-0 fs-exact-18 me-4">Address</h2>
+                        <h2 class="mb-0 fs-exact-18 me-4">{{ __('dashboard.address') }}</h2>
                     </div>
                     <div class="sa-divider"></div>
                     <div class="px-5 py-3 my-2 d-flex align-items-center justify-content-between">

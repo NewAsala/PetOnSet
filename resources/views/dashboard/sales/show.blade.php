@@ -2,15 +2,33 @@
 
 @section('content')
 
-<div class="container-fluid">
+@php
+    $saleStatusLabel = match ($sale->status) {
+        'Paid' => __('dashboard.paid'),
+        'Partially Paid' => __('dashboard.partially_paid'),
+        'Unpaid' => __('dashboard.unpaid'),
+        'Pending' => __('dashboard.pending'),
+        'Hold' => __('dashboard.sale_status_hold'),
+        'Canceled' => __('dashboard.sale_status_canceled'),
+        'Completed' => __('dashboard.completed'),
+        default => $sale->status ?? __('dashboard.unknown'),
+    };
+    $paymentMethodLabel = match ($sale->payment_method) {
+        'Cash' => __('dashboard.cash'),
+        'By_Whish' => __('dashboard.by_whish'),
+        default => $sale->payment_method,
+    };
+@endphp
+
+<div class="container-fluid py-5">
 
     {{-- Actions: Hidden when printing --}}
     <div class="d-flex justify-content-between align-items-center mb-4 no-print">
 
         <div>
-            <h4 class="mb-1">Sale Invoice</h4>
+            <h4 class="mb-1">{{ __('dashboard.sales_invoice') }}</h4>
             <p class="text-muted mb-0">
-                Invoice #{{ $sale->invoice_number }}
+                {{ __('dashboard.invoice_number') }} #{{ $sale->invoice_number }}
             </p>
         </div>
 
@@ -19,19 +37,19 @@
             <a href="{{ route('sale.create') }}"
                class="btn btn-success">
                 <i class="fas fa-plus me-1"></i>
-                New Sale
+                {{ __('dashboard.new_sale') }}
             </a>
 
             <button type="button"
                     onclick="window.print()"
                     class="btn btn-primary">
                 <i class="fas fa-print me-1"></i>
-                Print Invoice
+                {{ __('dashboard.print_invoice') }}
             </button>
 
             <a href="{{ route('sale.index') }}"
-               class="btn btn-outline-secondary">
-                Back to Sales
+               class="btn btn-secondary">
+                {{ __('dashboard.back_to_sales') }}
             </a>
 
         </div>
@@ -54,10 +72,10 @@
 
                 <h3 class="fw-bold mb-1">PET ON SET</h3>
 
-                <p class="mb-1">Grooming - Accessories - Food</p>
+                <p class="mb-1">{{ __('dashboard.business_tagline') }}</p>
 
                 <p class="mb-0 small">
-                    Thank you for shopping with us!
+                    {{ __('dashboard.thank_you_shopping') }}
                 </p>
 
             </div>
@@ -68,29 +86,29 @@
             <div class="invoice-details small">
 
                 <div class="d-flex justify-content-between">
-                    <span>Invoice:</span>
+                    <span>{{ __('dashboard.invoice_label') }}</span>
                     <strong>{{ $sale->invoice_number }}</strong>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Date:</span>
+                    <span>{{ __('dashboard.date_label') }}</span>
                     <span>{{ $sale->created_at->format('d/m/Y') }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Time:</span>
+                    <span>{{ __('dashboard.time_label') }}</span>
                     <span>{{ $sale->created_at->format('h:i A') }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Customer:</span>
+                    <span>{{ __('dashboard.customer_label') }}</span>
                     <span>
-                        {{ $sale->customer?->name ?? 'Walk-in Customer' }}
+                        {{ $sale->customer?->name ?? __('dashboard.walk_in_customer') }}
                     </span>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Cashier:</span>
+                    <span>{{ __('dashboard.cashier_label') }}</span>
                     <span>{{ $sale->user?->name ?? '-' }}</span>
                 </div>
 
@@ -103,10 +121,10 @@
 
                 <thead>
                     <tr>
-                        <th>Item</th>
-                        <th class="text-center">Qty</th>
-                        <th class="text-end">Price</th>
-                        <th class="text-end">Total</th>
+                        <th>{{ __('dashboard.item') }}</th>
+                        <th class="text-center">{{ __('dashboard.qty') }}</th>
+                        <th class="text-end">{{ __('dashboard.price') }}</th>
+                        <th class="text-end">{{ __('dashboard.total') }}</th>
                     </tr>
                 </thead>
 
@@ -116,11 +134,11 @@
 
                         <tr>
                             <td>
-                                {{ $item->product?->name ?? 'Deleted Product' }}
+                                {{ $item->product?->name ?? __('dashboard.deleted_product') }}
 
                                 @if($item->discount > 0)
                                     <small class="d-block">
-                                        Discount: {{ number_format($item->discount, 2) }}
+                                        {{ __('dashboard.discount_label') }} {{ number_format($item->discount, 2) }}
                                     </small>
                                 @endif
                             </td>
@@ -150,40 +168,40 @@
             <div class="receipt-totals">
 
                 <div class="d-flex justify-content-between">
-                    <span>Subtotal:</span>
+                    <span>{{ __('dashboard.subtotal') }}:</span>
                     <span>{{ number_format($sale->subtotal, 2) }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Discount:</span>
+                    <span>{{ __('dashboard.discount_label') }}</span>
                     <span>{{ number_format($sale->discount, 2) }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between fw-bold fs-5 mt-2">
-                    <span>Total:</span>
+                    <span>{{ __('dashboard.total') }}:</span>
                     <span>{{ number_format($sale->total, 2) }}</span>
                 </div>
 
                 <hr>
 
                 <div class="d-flex justify-content-between">
-                    <span>Paid:</span>
+                    <span>{{ __('dashboard.paid_label') }}</span>
                     <span>{{ number_format($sale->paid, 2) }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Remaining:</span>
+                    <span>{{ __('dashboard.remaining_label') }}</span>
                     <span>{{ number_format($sale->remaining_amount, 2) }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between mt-2">
-                    <span>Payment Method:</span>
-                    <span>{{ $sale->payment_method }}</span>
+                    <span>{{ __('dashboard.payment_method_colon') }}</span>
+                    <span>{{ $paymentMethodLabel }}</span>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span>Status:</span>
-                    <strong>{{ $sale->status }}</strong>
+                    <span>{{ __('dashboard.status_colon') }}</span>
+                    <strong>{{ $saleStatusLabel }}</strong>
                 </div>
 
             </div>
@@ -192,8 +210,8 @@
 
             {{-- Footer --}}
             <div class="text-center small mt-3">
-                <p class="fw-bold mb-1">Thank You!</p>
-                <p class="mb-0">We hope to see you again.</p>
+                <p class="fw-bold mb-1">{{ __('dashboard.thank_you') }}</p>
+                <p class="mb-0">{{ __('dashboard.hope_to_see_again') }}</p>
                 <p class="mb-0">PET ON SET</p>
             </div>
 

@@ -4,7 +4,7 @@
 @php
 	$breadcrumbItems = [
 		[
-			'label' => 'Products',
+			'label' => __('dashboard.products'),
 		],
 	];
 @endphp
@@ -13,18 +13,18 @@
     <div class="row g-4 align-items-center">
         <div class="col">
             @include('components.breadcrumb', ['items' => $breadcrumbItems])
-			<h1 class="h3 m-0">Products</h1>
+			<h1 class="h3 m-0">{{ __('dashboard.products') }}</h1>
         </div>
-        <div class="col-auto d-flex">
+        <div class="col-auto ">
             {{-- <a href="#" class="btn btn-secondary me-3">Import</a> --}}
             <button
                 type="button"
                 class="btn btn-secondary me-3"
                 data-bs-toggle="modal"
                 data-bs-target="#importProductsModal"
-            >Import
+            >{{ __('dashboard.import') }}
             </button>
-            <a href="{{ route('product.create') }}" class="btn btn-primary">New product</a></div>
+            <a href="{{ route('product.create') }}" class="btn btn-primary">{{ __('dashboard.new_product') }}</a></div>
     </div>
 </div>
 
@@ -33,15 +33,15 @@
         <div class="sa-layout__backdrop" data-sa-layout-sidebar-close=""></div>
         <div class="sa-layout__sidebar">
             <div class="sa-layout__sidebar-header">
-                <div class="sa-layout__sidebar-title">Filters</div>
-                <button type="button" class="sa-close sa-layout__sidebar-close" aria-label="Close"
+                <div class="sa-layout__sidebar-title">{{ __('dashboard.filters') }}</div>
+                <button type="button" class="sa-close sa-layout__sidebar-close" aria-label="{{ __('dashboard.close') }}"
                     data-sa-layout-sidebar-close=""></button>
             </div>
             <div class="sa-layout__sidebar-body sa-filters"
                 style="min-height: 0; overflow-x: hidden; overflow-y: auto; flex: 1 1 auto;">
                 <ul class="sa-filters__list">
                     <li class="sa-filters__item">
-                        <div class="sa-filters__item-title">Price</div>
+                        <div class="sa-filters__item-title">{{ __('dashboard.price') }}</div>
                         <div class="sa-filters__item-body">
                             <div class="sa-filter-range" data-min="{{ $availableMinPrice }}"
                                 data-max="{{ $availableMaxPrice }}" data-from="{{ $minPrice }}"
@@ -55,7 +55,7 @@
                         </div>
                     </li>
                     <li class="sa-filters__item">
-                        <div class="sa-filters__item-title">Categories</div>
+                        <div class="sa-filters__item-title">{{ __('dashboard.categories') }}</div>
                         <div class="sa-filters__item-body">
                             <ul class="list-unstyled m-0 mt-n2">
                                 @foreach ($categories as $category)
@@ -72,28 +72,28 @@
                         </div>
                     </li>
                     <li class="sa-filters__item">
-                        <div class="sa-filters__item-title">Stock</div>
+                        <div class="sa-filters__item-title">{{ __('dashboard.stock') }}</div>
                         <div class="sa-filters__item-body">
                             <select name="stock_status" class="form-select">
-                                <option value="">All stock levels</option>
-                                <option value="in_stock" @selected($stockStatus === 'in_stock')>In stock</option>
-                                <option value="low_stock" @selected($stockStatus === 'low_stock')>Low stock</option>
-                                <option value="out_of_stock" @selected($stockStatus === 'out_of_stock')>Out of stock</option>
+                                <option value="">{{ __('dashboard.all_stock_levels') }}</option>
+                                <option value="in_stock" @selected($stockStatus === 'in_stock')>{{ __('dashboard.in_stock') }}</option>
+                                <option value="low_stock" @selected($stockStatus === 'low_stock')>{{ __('dashboard.low_stock') }}</option>
+                                <option value="out_of_stock" @selected($stockStatus === 'out_of_stock')>{{ __('dashboard.out_of_stock') }}</option>
                             </select>
                         </div>
                     </li>
                     <li class="sa-filters__item">
-                        <div class="sa-filters__item-title">Status</div>
+                        <div class="sa-filters__item-title">{{ __('dashboard.status') }}</div>
                         <div class="sa-filters__item-body">
                             <select name="status" class="form-select">
-                                <option value="">All statuses</option>
-                                <option value="Active" @selected($status === 'Active')>Active</option>
-                                <option value="Inactive" @selected($status === 'Inactive')>Inactive</option>
+                                <option value="">{{ __('dashboard.all_statuses') }}</option>
+                                <option value="Active" @selected($status === 'Active')>{{ __('dashboard.active') }}</option>
+                                <option value="Inactive" @selected($status === 'Inactive')>{{ __('dashboard.inactive') }}</option>
                             </select>
                         </div>
                     </li>
                     <li class="sa-filters__item">
-                        <div class="sa-filters__item-title">Brands</div>
+                        <div class="sa-filters__item-title">{{ __('dashboard.brands') }}</div>
                         <div class="sa-filters__item-body">
                             <ul class="list-unstyled m-0 mt-n2">
                                 @foreach ($brands as $brand)
@@ -111,8 +111,8 @@
                     </li>
                 </ul>
                 <div class="d-grid gap-2 px-3 pb-3">
-                    <button type="submit" class="btn btn-primary">Apply filters</button>
-                    <a href="{{ route('product.index') }}" class="btn btn-light border">Clear filters</a>
+                    <button type="submit" class="btn btn-primary">{{ __('dashboard.apply_filters') }}</button>
+                    <a href="{{ route('product.index') }}" class="btn btn-light border">{{ __('dashboard.clear_filters') }}</a>
                 </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
                                     </path>
                                 </svg></button></div>
                         <div class="col"><input type="text"
-                                placeholder="Start typing to search for products"
+                                placeholder="{{ __('dashboard.search_products') }}"
                                 class="form-control form-control--search mx-auto" id="table-search" />
                         </div>
                     </div>
@@ -140,12 +140,12 @@
                     <thead>
                         <tr>
                             <th class="w-min" data-orderable="false"><input type="checkbox"
-                                    class="form-check-input m-0 fs-exact-16 d-block" aria-label="..." />
+                                    class="form-check-input m-0 fs-exact-16 d-block" aria-label="{{ __('dashboard.select_all') }}" />
                             </th>
-                            <th class="min-w-20x">Product</th>
-                            <th>Category</th>
-                            <th>Stock</th>
-                            <th>Selling Price</th>
+                            <th class="min-w-20x">{{ __('dashboard.product') }}</th>
+                            <th>{{ __('dashboard.category') }}</th>
+                            <th>{{ __('dashboard.stock') }}</th>
+                            <th>{{ __('dashboard.selling_price') }}</th>
                             <th class="w-min" data-orderable="false"></th>
                         </tr>
                     </thead>
@@ -153,7 +153,7 @@
                         @foreach ($products as $product)
                         <tr>
                             <td>
-                                <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..." />
+                                <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="{{ __('dashboard.select_product') }}" />
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
@@ -171,11 +171,11 @@
                                         <a href="{{ route('product.show', $product->id) }}" class="text-reset">{{ $product->name }}</a>
                                         <div class="sa-meta mt-0">
                                             <ul class="sa-meta__list">
-                                                <li class="sa-meta__item">ID:
-                                                    <span title="Click to copy product ID" class="st-copy">{{ $product->id }}</span>
+                                                <li class="sa-meta__item">{{ __('dashboard.identifier') }}
+                                                    <span title="{{ __('dashboard.click_to_copy_product_id') }}" class="st-copy">{{ $product->id }}</span>
                                                 </li>
-                                                <li class="sa-meta__item">SKU:
-                                                    <span title="Click to copy product SKU" class="st-copy">{{ $product->sku }}</span>
+                                                <li class="sa-meta__item">{{ __('dashboard.sku') }}:
+                                                    <span title="{{ __('dashboard.click_to_copy_product_sku') }}" class="st-copy">{{ $product->sku }}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -184,7 +184,7 @@
                             </td>
                             <td>{{ $product->category->name }}</td>
                             <td>
-                                <div class="badge badge-sa-success">{{ $product->stock_quantity }} In Stock</div>
+                                <div class="badge badge-sa-success">{{ $product->stock_quantity }} {{ __('dashboard.in_stock_label') }}</div>
                             </td>
                             <td>
                                 <div class="sa-price"><span class="sa-price__symbol">$</span>
@@ -194,7 +194,7 @@
                             </td>
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-sa-muted btn-sm" type="button" id="product-context-menu-0" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More">
+                                    <button class="btn btn-sa-muted btn-sm" type="button" id="product-context-menu-0" data-bs-toggle="dropdown" aria-expanded="false" aria-label="{{ __('dashboard.more') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="3" height="13" fill="currentColor">
                                             <path
                                                 d="M1.5,8C0.7,8,0,7.3,0,6.5S0.7,5,1.5,5S3,5.7,3,6.5S2.3,8,1.5,8z M1.5,3C0.7,3,0,2.3,0,1.5S0.7,0,1.5,0 S3,0.7,3,1.5S2.3,3,1.5,3z M1.5,10C2.3,10,3,10.7,3,11.5S2.3,13,1.5,13S0,12.3,0,11.5S0.7,10,1.5,10z">
@@ -202,8 +202,8 @@
                                         </svg>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="product-context-menu-0">
-                                        <li><a class="dropdown-item" href="{{ route('product.edit', ['product' => $product->id]) }}">Edit</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('product.show', ['product' => $product->id]) }}">Show</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('product.edit', ['product' => $product->id]) }}">{{ __('dashboard.edit') }}</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('product.show', ['product' => $product->id]) }}">{{ __('dashboard.show') }}</a></li>
                                         <li>
                                             <hr class="dropdown-divider" />
                                         </li>
@@ -217,7 +217,7 @@
                                                 data-delete-name="{{ $product->name }}"
                                                 data-delete-pets-count="{{ $product->pets_count }}"
                                             >
-                                                Delete
+                                                {{ __('dashboard.delete') }}
                                             </button>
                                         </li>
                                     </ul>
@@ -245,12 +245,12 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        Import Products
+                        {{ __('dashboard.import_products') }}
                     </h5>
 
                     <button
                         type="button"
-                        class="btn-close"
+                        class="btn-close m-0"
                         data-bs-dismiss="modal"
                     ></button>
                 </div>
@@ -259,7 +259,7 @@
 
                     <div class="mb-3">
                         <label for="importFile" class="form-label">
-                            Excel File
+                            {{ __('dashboard.excel_file') }}
                         </label>
 
                         <input
@@ -279,7 +279,7 @@
                     </div>
 
                     <div class="form-text">
-                        Supported formats: XLSX, XLS, CSV.
+                        {{ __('dashboard.supported_import_formats') }}
                     </div>
 
                 </div>
@@ -291,14 +291,14 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
-                        Cancel
+                        {{ __('dashboard.cancel') }}
                     </button>
 
                     <button
                         type="submit"
                         class="btn btn-primary"
                     >
-                        Import
+                        {{ __('dashboard.import') }}
                     </button>
 
                 </div>

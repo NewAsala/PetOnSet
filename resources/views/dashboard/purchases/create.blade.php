@@ -9,8 +9,8 @@
 
 @php
     $breadcrumbItems = [
-        ['label' => 'Purchases', 'url' => route('purchase.index')],
-        ['label' => 'Create Purchase', 'url' => null],
+        ['label' => __('dashboard.purchases'), 'url' => route('purchase.index')],
+        ['label' => __('dashboard.create_purchase'), 'url' => null],
     ];
 
     $oldItems = old('items', [
@@ -33,23 +33,23 @@
 
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
                 <div>
-                    <h1 class="h3 m-0">Create Purchase</h1>
+                    <h1 class="h3 m-0">{{ __('dashboard.create_purchase') }}</h1>
 
                     <p class="text-muted mb-0">
-                        Record products received from a supplier.
+                        {{ __('dashboard.record_products_received') }}
                     </p>
                 </div>
 
                 {{-- <a href="{{ route('purchase.index') }}"
                 class="btn btn-outline-dark">
                     <i class="fas fa-arrow-left me-1"></i>
-                    Back to Purchases
+                    {{ __('dashboard.back_to_purchases') }}
                 </a> --}}
             </div>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
-                    <strong>Please correct the following errors:</strong>
+                    <strong>{{ __('dashboard.correct_following_errors') }}</strong>
                     <ul class="mb-0 mt-2">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -66,7 +66,7 @@
                 {{-- Purchase information --}}
                 <div class="card mb-4">
                     <div class="card-header bg-white">
-                        <h5 class="mb-0">Purchase Information</h5>
+                        <h5 class="mb-0">{{ __('dashboard.purchase_details') }}</h5>
                     </div>
 
                     <div class="card-body">
@@ -74,14 +74,14 @@
 
                             <div class="col-md-4">
                                 <label for="supplier_id" class="form-label">
-                                    Supplier <span class="text-danger">*</span>
+                                    {{ __('dashboard.supplier') }} <span class="text-danger">*</span>
                                 </label>
 
                                 <select name="supplier_id"
                                         id="supplier_id"
                                         class="form-select @error('supplier_id') is-invalid @enderror"
                                         required>
-                                    <option value="">Select supplier</option>
+                                    <option value="">{{ __('dashboard.select_supplier') }}</option>
 
                                     @foreach ($suppliers as $supplier)
                                         <option value="{{ $supplier->id }}"
@@ -98,7 +98,7 @@
 
                             <div class="col-md-4">
                                 <label for="invoice_number" class="form-label">
-                                    Invoice Number <span class="text-danger">*</span>
+                                    {{ __('dashboard.invoice_number') }} <span class="text-danger">*</span>
                                 </label>
 
                                 <input type="text"
@@ -106,7 +106,7 @@
                                     id="invoice_number"
                                     class="form-control @error('invoice_number') is-invalid @enderror"
                                     value="{{ old('invoice_number') }}"
-                                    placeholder="e.g. PUR-0001"
+                                    placeholder="{{ __('dashboard.purchase_invoice_number_placeholder') }}"
                                     required>
 
                                 @error('invoice_number')
@@ -116,7 +116,7 @@
 
                             <div class="col-md-4">
                                 <label for="purchase_date" class="form-label">
-                                    Purchase Date <span class="text-danger">*</span>
+                                    {{ __('dashboard.purchase_date') }} <span class="text-danger">*</span>
                                 </label>
 
                                 <input type="text"
@@ -124,7 +124,7 @@
                                     id="purchase_date"
                                     class="form-control datepicker-here @error('purchase_date') is-invalid @enderror"
                                     value="{{ old('purchase_date', now()->format('Y-m-d')) }}"
-                                    required data-language="en">
+                                    required data-language="{{ app()->getLocale() }}">
 
                                 @error('purchase_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -132,13 +132,13 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label">Currency</label>
+                                <label class="form-label">{{ __('dashboard.currency') }}</label>
                                 <input type="text"
                                     class="form-control"
                                     value="USD ($)"
                                     readonly>
                                 <small class="text-muted">
-                                    Purchase costs are entered in US dollars.
+                                    {{ __('dashboard.purchase_costs_usd') }}
                                 </small>
                             </div>
 
@@ -149,13 +149,13 @@
                 {{-- Purchase products --}}
                 <div class="card mb-4">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <h5 class="mb-0">Purchase Items</h5>
+                        <h5 class="mb-0">{{ __('dashboard.purchase_items') }}</h5>
 
                         <button type="button"
                                 class="btn btn-sm btn-outline-primary"
                                 id="addItemBtn">
                             <i class="fas fa-plus me-1"></i>
-                            Add Product
+                            {{ __('dashboard.add_product') }}
                         </button>
                     </div>
 
@@ -165,13 +165,13 @@
                                 id="purchaseItemsTable">
                                 <thead class="table-light">
                                     <tr>
-                                        <th style="min-width: 210px;">Product</th>
-                                        <th style="min-width: 100px;">Quantity</th>
-                                        <th style="min-width: 140px;">Unit Cost ($)</th>
-                                        <th style="min-width: 150px;">Batch Number</th>
-                                        <th style="min-width: 150px;">Expiry Date</th>
-                                        <th style="min-width: 130px;">Subtotal ($)</th>
-                                        <th style="width: 60px;">Remove</th>
+                                        <th style="min-width: 210px;">{{ __('dashboard.product') }}</th>
+                                        <th style="min-width: 100px;">{{ __('dashboard.quantity') }}</th>
+                                        <th style="min-width: 140px;">{{ __('dashboard.unit_cost') }}</th>
+                                        <th style="min-width: 150px;">{{ __('dashboard.batch_number') }}</th>
+                                        <th style="min-width: 150px;">{{ __('dashboard.expiry_date') }}</th>
+                                        <th style="min-width: 130px;">{{ __('dashboard.subtotal_dollars') }}</th>
+                                        <th style="width: 60px;">{{ __('dashboard.remove') }}</th>
                                     </tr>
                                 </thead>
 
@@ -182,7 +182,7 @@
                                                 <select name="items[{{ $index }}][product_id]"
                                                         class="form-select product-select @error("items.$index.product_id") is-invalid @enderror"
                                                         required>
-                                                    <option value="">Select product</option>
+                                                    <option value="">{{ __('dashboard.select_product') }}</option>
 
                                                     @foreach ($products as $product)
                                                         <option value="{{ $product->id }}"
@@ -224,7 +224,7 @@
                                                     class="form-control"
                                                     value="{{ $oldItem['batch_number'] ?? '' }}"
                                                     maxlength="255"
-                                                    placeholder="Unique batch no."
+                                                    placeholder="{{ __('dashboard.unique_batch_placeholder') }}"
                                                     required>
                                             </td>
 
@@ -233,7 +233,7 @@
                                                     name="items[{{ $index }}][expiry_date]"
                                                     class="form-control item-expiry datepicker-here"
                                                     value="{{ $oldItem['expiry_date'] ?? '' }}"
-                                                    data-language="en">
+                                                    data-language="{{ app()->getLocale() }}">
                                             </td>
 
                                             <td>
@@ -243,8 +243,8 @@
                                             <td class="text-center">
                                                 <button type="button"
                                                         class="btn btn-sm btn-outline-danger remove-item"
-                                                        title="Remove product"
-                                                        aria-label="Remove product">
+                                                        title="{{ __('dashboard.remove_product') }}"
+                                                        aria-label="{{ __('dashboard.remove_product') }}">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
@@ -257,7 +257,7 @@
 
                     <div class="card-footer bg-white">
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Number of product lines</span>
+                            <span class="text-muted">{{ __('dashboard.number_of_product_lines') }}</span>
                             <strong id="itemCount">0</strong>
                         </div>
                     </div>
@@ -268,19 +268,19 @@
                     <div class="col-xl-5 col-lg-6">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h5 class="mb-0">Payment Summary</h5>
+                                <h5 class="mb-0">{{ __('dashboard.payment_summary') }}</h5>
                             </div>
 
                             <div class="card-body">
 
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span>Subtotal</span>
+                                    <span>{{ __('dashboard.subtotal') }}</span>
                                     <strong id="subtotalDisplay">$0.00</strong>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="discount" class="form-label">
-                                        Discount ($)
+                                        {{ __('dashboard.discount_dollars') }}
                                     </label>
 
                                     <input type="number"
@@ -297,13 +297,13 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span>Total</span>
+                                    <span>{{ __('dashboard.total') }}</span>
                                     <strong id="totalDisplay" class="fs-5">$0.00</strong>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="paid" class="form-label">
-                                        Amount Paid ($)
+                                        {{ __('dashboard.amount_paid_dollars') }}
                                     </label>
 
                                     <input type="number"
@@ -320,23 +320,22 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span>Remaining Amount</span>
+                                    <span>{{ __('dashboard.remaining_amount') }}</span>
                                     <strong id="remainingDisplay">$0.00</strong>
                                 </div>
 
                                 <hr>
 
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span>Payment Status</span>
+                                    <span>{{ __('dashboard.payment_status') }}</span>
                                     <span id="paymentStatus"
                                         class="badge bg-secondary">
-                                        Unpaid
+                                        {{ __('dashboard.unpaid') }}
                                     </span>
                                 </div>
 
                                 <small class="text-muted d-block mt-2">
-                                    Payment status is calculated automatically from
-                                    the total and amount paid.
+                                    {{ __('dashboard.payment_status_calculated') }}
                                 </small>
                             </div>
                         </div>
@@ -347,14 +346,14 @@
                 <div class="d-flex justify-content-end gap-2 mb-4">
                     <a href="{{ route('purchase.index') }}"
                     class="btn btn-light border">
-                        Cancel
+                        {{ __('dashboard.cancel') }}
                     </a>
 
                     <button type="submit"
                             class="btn btn-primary"
                             id="submitPurchaseBtn">
                         <i class="fas fa-save me-1"></i>
-                        Save Purchase
+                        {{ __('dashboard.save_purchase') }}
                     </button>
                 </div>
 
@@ -371,7 +370,7 @@
             <select name="items[__INDEX__][product_id]"
                     class="form-select product-select"
                     required>
-                <option value="">Select product</option>
+                <option value="">{{ __('dashboard.select_product') }}</option>
 
                 @foreach ($products as $product)
                     <option value="{{ $product->id }}">
@@ -406,7 +405,7 @@
                    name="items[__INDEX__][batch_number]"
                    class="form-control"
                    maxlength="255"
-                   placeholder="Unique batch no."
+                   placeholder="{{ __('dashboard.unique_batch_placeholder') }}"
                    required>
         </td>
 
@@ -414,7 +413,7 @@
                  <input type="text"
                    name="items[__INDEX__][expiry_date]"
                      class="form-control item-expiry datepicker-here"
-                     data-language="en">
+                     data-language="{{ app()->getLocale() }}">
         </td>
 
         <td>
@@ -424,8 +423,8 @@
         <td class="text-center">
             <button type="button"
                     class="btn btn-sm btn-outline-danger remove-item"
-                    title="Remove product"
-                    aria-label="Remove product">
+                    title="{{ __('dashboard.remove_product') }}"
+                    aria-label="{{ __('dashboard.remove_product') }}">
                 <i class="fas fa-trash"></i>
             </button>
         </td>
@@ -462,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function initializeExpiryDatepicker(input) {
             $(input).datepicker({
-                language: 'en',
+                language: @json(app()->getLocale()),
                 dateFormat: 'yyyy-mm-dd',
                 minDate: getMinimumExpiryDate(),
                 onShow: function (instance) {
@@ -518,13 +517,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const statusBadge = document.getElementById('paymentStatus');
 
         if (total === 0 || paid === 0) {
-            statusBadge.textContent = 'Unpaid';
+            statusBadge.textContent = @json(__('dashboard.unpaid'));
             statusBadge.className = 'badge bg-danger';
         } else if (paid < total) {
-            statusBadge.textContent = 'Partially Paid';
+            statusBadge.textContent = @json(__('dashboard.partially_paid'));
             statusBadge.className = 'badge bg-warning text-dark';
         } else {
-            statusBadge.textContent = 'Paid';
+            statusBadge.textContent = @json(__('dashboard.paid'));
             statusBadge.className = 'badge bg-success';
         }
     }
@@ -570,7 +569,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const rows = itemsBody.querySelectorAll('.purchase-item-row');
 
         if (rows.length <= 1) {
-            alert('A purchase must contain at least one product.');
+            alert(@json(__('dashboard.purchase_must_have_product')));
             return;
         }
 
@@ -594,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (rows.length === 0) {
             event.preventDefault();
-            alert('Please add at least one product.');
+            alert(@json(__('dashboard.please_add_product')));
             return;
         }
 
@@ -610,21 +609,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (discount < 0 || discount > subtotal) {
             event.preventDefault();
-            alert('Discount must be between $0.00 and the subtotal.');
+            alert(@json(__('dashboard.discount_between_zero_subtotal')));
             discountInput.focus();
             return;
         }
 
         if (paid < 0 || paid > total) {
             event.preventDefault();
-            alert('The paid amount cannot exceed the purchase total.');
+            alert(@json(__('dashboard.paid_exceeds_purchase_total')));
             paidInput.focus();
             return;
         }
 
         submitButton.disabled = true;
         submitButton.innerHTML =
-            '<span class="spinner-border spinner-border-sm me-1"></span> Saving...';
+            '<span class="spinner-border spinner-border-sm me-1"></span> ' + @json(__('dashboard.saving'));
     });
 
     calculateTotals();

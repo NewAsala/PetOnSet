@@ -18,6 +18,16 @@ use Illuminate\Support\Str;
 
 class SaleController extends Controller
 {
+    public function index()
+    {
+        $sales = Sale::with(['customer', 'user'])
+            ->withCount('saleItems')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('dashboard.sales.index', compact('sales'));
+    }
+
     public function create()
     {
         $customers = Customer::orderBy('name')->get();
@@ -64,7 +74,7 @@ class SaleController extends Controller
 
                 if ($itemDiscount > ($quantity * $price)) {
                     throw ValidationException::withMessages([
-                        'items' => 'Item discount cannot exceed its total.',
+                        'items' => __('Item discount cannot exceed its total.'),
                     ]);
                 }
 
@@ -88,13 +98,13 @@ class SaleController extends Controller
 
             if ($discount > $subtotal) {
                 throw ValidationException::withMessages([
-                    'discount' => 'Discount cannot exceed subtotal.',
+                    'discount' => __('Discount cannot exceed subtotal.'),
                 ]);
             }
 
             if ($paid > $total) {
                 throw ValidationException::withMessages([
-                    'paid' => 'Paid amount cannot exceed total.',
+                    'paid' => __('Paid amount cannot exceed total.'),
                 ]);
             }
 
@@ -160,7 +170,11 @@ class SaleController extends Controller
 
                 if ($availableQuantity < $requiredQuantity) {
                     throw ValidationException::withMessages([
-                        'items' => "Insufficient stock for product: {$product->name}. Available: {$availableQuantity}, Requested: {$requiredQuantity}.",
+                        'items' => __('Insufficient stock for product: :product. Available: :available, Requested: :requested.', [
+                            'product' => $product->name,
+                            'available' => $availableQuantity,
+                            'requested' => $requiredQuantity,
+                        ]),
                     ]);
                 }
 
@@ -170,7 +184,9 @@ class SaleController extends Controller
              */
                 if ((int) $product->stock_quantity < $requiredQuantity) {
                     throw ValidationException::withMessages([
-                        'items' => "The stock quantity of {$product->name} is inconsistent with its available batches. Please review the inventory.",
+                        'items' => __('The stock quantity of :product is inconsistent with its available batches. Please review the inventory.', [
+                            'product' => $product->name,
+                        ]),
                     ]);
                 }
 

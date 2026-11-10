@@ -115,7 +115,7 @@ class SaleRequest extends FormRequest
                 if ($itemDiscount > $itemTotal) {
                     $validator->errors()->add(
                         "items.$index.discount",
-                        'The item discount cannot exceed its total.'
+                        __('The item discount cannot exceed its total.')
                     );
 
                     continue;
@@ -129,7 +129,7 @@ class SaleRequest extends FormRequest
             if ($discount > $subtotal) {
                 $validator->errors()->add(
                     'discount',
-                    'The invoice discount cannot exceed the subtotal after item discounts.'
+                    __('The invoice discount cannot exceed the subtotal after item discounts.')
                 );
             }
 
@@ -139,7 +139,7 @@ class SaleRequest extends FormRequest
             if ($paid > $total) {
                 $validator->errors()->add(
                     'paid',
-                    'The paid amount cannot exceed the invoice total.'
+                    __('The paid amount cannot exceed the invoice total.')
                 );
             }
         });
@@ -148,13 +148,13 @@ class SaleRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'invoice_number.unique' => 'This invoice number already exists.',
-            'customer_id.exists' => 'The selected customer does not exist.',
-            'items.required' => 'Please add at least one product.',
-            'items.min' => 'The sale must contain at least one product.',
-            'items.*.product_id.distinct' => 'You cannot add the same product more than once.',
-            'items.*.quantity.min' => 'Product quantity must be at least 1.',
-            'items.*.product_id.exists' => 'One of the selected products does not exist.',
+            'invoice_number.unique' => __('This invoice number already exists.'),
+            'customer_id.exists' => __('The selected customer does not exist.'),
+            'items.required' => __('Please add at least one product.'),
+            'items.min' => __('The sale must contain at least one product.'),
+            'items.*.product_id.distinct' => __('You cannot add the same product more than once.'),
+            'items.*.quantity.min' => __('Product quantity must be at least 1.'),
+            'items.*.product_id.exists' => __('One of the selected products does not exist.'),
         ];
     }
 }

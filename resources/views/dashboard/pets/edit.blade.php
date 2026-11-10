@@ -8,11 +8,11 @@
 
     $breadcrumbItems = [
         [
-            'label' => 'Pets',
+            'label' => __('dashboard.pets'),
             'url' => route('pet.index'),
         ],
         [
-            'label' => 'Edit Pet',
+            'label' => __('dashboard.edit_pet'),
         ],
     ];
 @endphp
@@ -29,7 +29,7 @@
             ])
 
             <h1 class="h3 m-0">
-                Edit {{ $pet->name }}
+                {{ __('dashboard.edit') }} {{ $pet->name }}
             </h1>
 
         </div>
@@ -59,7 +59,7 @@
             <div class="col-md-6">
 
                 <label for="inputName" class="form-label">
-                    Name
+                    {{ __('dashboard.name') }}
                 </label>
 
                 <input
@@ -86,7 +86,7 @@
             <div class="col-md-6">
 
                 <label for="customer_id" class="form-label">
-                    Customer
+                    {{ __('dashboard.customer') }}
                 </label>
 
                 <select
@@ -96,7 +96,7 @@
                 >
 
                     <option value="">
-                        Select customer
+                        {{ __('dashboard.select_customer') }}
                     </option>
 
                     @foreach ($customers as $customer)
@@ -130,7 +130,7 @@
             <div class="col-md-6">
 
                 <label for="type" class="form-label">
-                    Type
+                    {{ __('dashboard.type') }}
                 </label>
 
                 <select
@@ -140,7 +140,7 @@
                 >
 
                     <option value="">
-                        Select type
+                        {{ __('dashboard.select_type') }}
                     </option>
 
                     @foreach (PetTypeEnum::cases() as $type)
@@ -151,7 +151,7 @@
                                 old('type', $pet->type?->value) === $type->value
                             )
                         >
-                            {{ $type->value }}
+                            {{ __('dashboard.' . strtolower($type->value)) }}
                         </option>
 
                     @endforeach
@@ -174,7 +174,7 @@
             <div class="col-md-6">
 
                 <label for="gender" class="form-label">
-                    Gender
+                    {{ __('dashboard.gender') }}
                 </label>
 
                 <select
@@ -184,7 +184,7 @@
                 >
 
                     <option value="">
-                        Select gender
+                        {{ __('dashboard.select_gender') }}
                     </option>
 
                     @foreach (GenderEnum::cases() as $gender)
@@ -195,7 +195,7 @@
                                 old('gender', $pet->gender?->value) === $gender->value
                             )
                         >
-                            {{ $gender->value }}
+                            {{ __('dashboard.' . strtolower($gender->value)) }}
                         </option>
 
                     @endforeach
@@ -218,7 +218,7 @@
             <div class="col-md-6">
 
                 <label for="age" class="form-label">
-                    Age
+                    {{ __('dashboard.age') }}
                 </label>
 
                 <input
@@ -246,7 +246,7 @@
             <div class="col-md-6">
 
                 <label for="weight" class="form-label">
-                    Weight (kg)
+                    {{ __('dashboard.weight_kg') }}
                 </label>
 
                 <input
@@ -275,7 +275,7 @@
             <div class="col-12">
 
                 <label for="notes" class="form-label">
-                    Notes
+                    {{ __('dashboard.notes') }}
                 </label>
 
                 <textarea
@@ -283,7 +283,7 @@
                     id="notes"
                     rows="4"
                     class="form-control @error('notes') is-invalid @enderror"
-                    placeholder="Additional notes..."
+                    placeholder="{{ __('dashboard.additional_notes') }}"
                 >{{ old('notes', $pet->notes) }}</textarea>
 
                 @error('notes')
@@ -305,14 +305,14 @@
                     type="submit"
                     class="btn btn-primary"
                 >
-                    Save changes
+                    {{ __('dashboard.save_changes') }}
                 </button>
 
                 <a
                     href="{{ route('pet.index') }}"
                     class="btn btn-secondary"
                 >
-                    Cancel
+                    {{ __('dashboard.cancel') }}
                 </a>
 
             </div>

@@ -54,8 +54,26 @@
     */
     (function() {
         $.fn.DataTable.ext.pager.numbers_length = 5;
-        $.fn.DataTable.defaults.oLanguage.sInfo = 'Showing _START_ to _END_ of _TOTAL_';
-        $.fn.DataTable.defaults.oLanguage.sLengthMenu = 'Rows per page _MENU_';
+        const isArabic = document.documentElement.lang === 'ar';
+        $.fn.DataTable.defaults.oLanguage.sInfo = isArabic
+            ? 'عرض _START_ إلى _END_ من _TOTAL_'
+            : 'Showing _START_ to _END_ of _TOTAL_';
+        $.fn.DataTable.defaults.oLanguage.sInfoEmpty = isArabic
+            ? 'عرض 0 إلى 0 من 0'
+            : 'Showing 0 to 0 of 0';
+        $.fn.DataTable.defaults.oLanguage.sLengthMenu = isArabic
+            ? 'عدد الصفوف في الصفحة _MENU_'
+            : 'Rows per page _MENU_';
+        $.fn.DataTable.defaults.oLanguage.sEmptyTable = isArabic
+            ? 'لا توجد بيانات متاحة في الجدول'
+            : 'No data available in table';
+        $.fn.DataTable.defaults.oLanguage.sZeroRecords = isArabic
+            ? 'لم يتم العثور على نتائج مطابقة'
+            : 'No matching records found';
+        $.fn.DataTable.defaults.oLanguage.oPaginate.sPrevious = isArabic ? 'السابق' : 'Previous';
+        $.fn.DataTable.defaults.oLanguage.oPaginate.sNext = isArabic ? 'التالي' : 'Next';
+        $.fn.DataTable.defaults.oLanguage.oPaginate.sFirst = isArabic ? 'الأول' : 'First';
+        $.fn.DataTable.defaults.oLanguage.oPaginate.sLast = isArabic ? 'الأخير' : 'Last';
 
         const template = '' +
             '<"sa-datatables"' +

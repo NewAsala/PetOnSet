@@ -2,838 +2,832 @@
 
 @section('content')
 
-<div class="container-fluid">
+    @php
+        $breadcrumbItems = [
+            ['label' => __('dashboard.sales'), 'url' => route('sale.index')],
+            ['label' => __('dashboard.create_sale'), 'url' => null],
+        ];
+    @endphp
 
-    {{-- Page Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h4 class="mb-1">Point of Sale</h4>
-            <p class="text-muted mb-0">Create a new sales invoice</p>
+    <div class="py-5">
+        <div class="row g-4 align-items-center">
+            <div class="col">
+                @include('components.breadcrumb', [
+                    'items' => $breadcrumbItems,
+                ])
+
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                    <div>
+                        <h1 class="h3 m-0">{{ __('dashboard.point_of_sale') }}</h1>
+
+                        <p class="text-muted mb-0">
+                            {{ __('dashboard.create_sales_invoice') }}
+                        </p>
+                    </div>
+                </div>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>{{ __('dashboard.correct_following_errors') }}</strong>
+                        <ul class="mb-0 mt-2">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+            </div>
         </div>
 
-        <a href="{{ route('sale.index') }}" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-1"></i>
-            Back to Sales
-        </a>
-    </div>
+        <form action="{{ route('sale.store') }}" method="POST" id="saleForm">
+            @csrf
 
-    <form action="{{ route('sale.store') }}" method="POST" id="saleForm">
-        @csrf
+            <div class="row g-3">
 
-        <div class="row g-3">
+                {{-- LEFT SIDE: PRODUCTS --}}
+                <div class="col-lg-8">
 
-            {{-- LEFT SIDE: PRODUCTS --}}
-            <div class="col-lg-8">
+                    {{-- Invoice Information --}}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row g-3">
 
-                {{-- Invoice Information --}}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ __('dashboard.invoice_number') }}</label>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Invoice Number</label>
+                                    <input type="text" name="invoice_number"
+                                        class="form-control @error('invoice_number') is-invalid @enderror"
+                                        value="{{ old('invoice_number', $invoiceNumber) }}" required>
 
-                                <input type="text"
-                                       name="invoice_number"
-                                       class="form-control @error('invoice_number') is-invalid @enderror"
-                                       value="{{ old('invoice_number', $invoiceNumber) }}"
-                                       required>
+                                    @error('invoice_number')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                                @error('invoice_number')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ __('dashboard.customer') }}</label>
+
+                                    <select name="customer_id" class="form-select">
+                                        <option value="">{{ __('dashboard.walk_in_customer') }}</option>
+
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}"
+                                                {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                                {{ $customer->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('customer_id')
+                                        <div class="text-danger small">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Product Search --}}
+                    <div class="card mb-3">
+                        <div class="card-body">
+
+                            <label class="form-label fw-semibold">
+                                {{ __('dashboard.scan_barcode_search_product') }}
+                            </label>
+
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text">
+                                    <i class="fas fa-barcode"></i>
+                                </span>
+
+                                <input type="text" id="productSearch" class="form-control"
+                                    placeholder="{{ __('dashboard.scan_barcode_placeholder') }}" autocomplete="off" autofocus>
+
+                                <button type="button" class="btn btn-primary" id="searchButton">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Customer</label>
+                            <div class="form-text">
+                                {{ __('dashboard.scanner_help') }}
+                            </div>
 
-                                <select name="customer_id" class="form-select">
-                                    <option value="">Walk-in Customer</option>
+                            <div id="searchMessage" class="small mt-2"></div>
 
-                                    @foreach($customers as $customer)
-                                        <option value="{{ $customer->id }}"
-                                            {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
-                                            {{ $customer->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            {{-- Search Results --}}
+                            <div id="searchResults" class="list-group mt-2" style="display:none;">
+                            </div>
 
-                                @error('customer_id')
+                        </div>
+                    </div>
+
+                    {{-- Cart --}}
+                    <div class="card">
+
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ __('dashboard.current_sale') }}</h5>
+
+                            <span class="badge bg-primary" id="itemsCount">
+                                {{ __('dashboard.zero_items') }}
+                            </span>
+                        </div>
+
+                        <div class="card-body p-0">
+
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>{{ __('dashboard.product') }}</th>
+                                            <th width="120">{{ __('dashboard.price') }}</th>
+                                            <th width="140">{{ __('dashboard.quantity') }}</th>
+                                            <th width="120">{{ __('dashboard.discount') }}</th>
+                                            <th width="120">{{ __('dashboard.total') }}</th>
+                                            <th width="50"></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="cartItems">
+
+                                        <tr id="emptyCart">
+                                            <td colspan="6" class="text-center text-muted py-5">
+                                                <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                                                <p class="mb-0">
+                                                    {{ __('dashboard.no_products_added') }}
+                                                </p>
+                                                <small>
+                                                    {{ __('dashboard.scan_or_search_product') }}
+                                                </small>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- RIGHT SIDE: PAYMENT --}}
+                <div class="col-lg-4">
+
+                    <div class="card mb-3">
+
+                        <div class="card-header">
+                            <h5 class="mb-0">{{ __('dashboard.order_summary') }}</h5>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">{{ __('dashboard.items') }}</span>
+                                <strong id="summaryItems">0</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">{{ __('dashboard.subtotal') }}</span>
+                                <strong id="subtotal">0.00</strong>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">{{ __('dashboard.invoice_discount') }}</label>
+
+                                <input type="number" name="discount" id="invoiceDiscount" class="form-control"
+                                    value="{{ old('discount', 0) }}" min="0" step="0.01">
+
+                                @error('discount')
                                     <div class="text-danger small">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="fw-semibold">{{ __('dashboard.total') }}</span>
+
+                                <h3 class="mb-0 text-primary" id="total">
+                                    0.00
+                                </h3>
+                            </div>
+
                         </div>
                     </div>
-                </div>
 
-                {{-- Product Search --}}
-                <div class="card mb-3">
-                    <div class="card-body">
+                    <div class="card mb-3">
 
-                        <label class="form-label fw-semibold">
-                            Scan Barcode or Search Product
-                        </label>
-
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-text">
-                                <i class="fas fa-barcode"></i>
-                            </span>
-
-                            <input type="text"
-                                   id="productSearch"
-                                   class="form-control"
-                                   placeholder="Scan barcode or type product name..."
-                                   autocomplete="off"
-                                   autofocus>
-
-                            <button type="button"
-                                    class="btn btn-primary"
-                                    id="searchButton">
-                                <i class="fas fa-search"></i>
-                            </button>
+                        <div class="card-header">
+                            <h5 class="mb-0">{{ __('dashboard.payment') }}</h5>
                         </div>
 
-                        <div class="form-text">
-                            Scan the product barcode using the USB scanner,
-                            or type its name to search.
+                        <div class="card-body">
+
+                            <div class="mb-3">
+                                <label class="form-label">{{ __('dashboard.paid_amount') }}</label>
+
+                                <input type="number" name="paid" id="paid" class="form-control form-control-lg"
+                                    value="{{ old('paid', 0) }}" min="0" step="0.01">
+
+                                @error('paid')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">{{ __('dashboard.remaining_amount') }}</span>
+
+                                <strong id="remaining" class="text-danger">
+                                    0.00
+                                </strong>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">{{ __('dashboard.payment_method_label') }}</label>
+
+                                <select name="payment_method" class="form-select">
+
+                                    @foreach (\App\Enums\PaymentMethodEnum::cases() as $method)
+                                        <option value="{{ $method->value }}"
+                                            {{ old('payment_method', \App\Enums\PaymentMethodEnum::CASH->value) == $method->value ? 'selected' : '' }}>
+                                            {{ __('dashboard.' . strtolower($method->value)) }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+
+                            <div class="alert alert-info py-2 mb-0">
+                                <small>
+                                    {{ __('dashboard.payment_status_auto') }}
+                                </small>
+                            </div>
+
                         </div>
-
-                        <div id="searchMessage" class="small mt-2"></div>
-
-                        {{-- Search Results --}}
-                        <div id="searchResults"
-                             class="list-group mt-2"
-                             style="display:none;">
-                        </div>
-
-                    </div>
-                </div>
-
-                {{-- Cart --}}
-                <div class="card">
-
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Current Sale</h5>
-
-                        <span class="badge bg-primary" id="itemsCount">
-                            0 Items
-                        </span>
                     </div>
 
-                    <div class="card-body p-0">
+                    {{-- Complete Sale --}}
+                    <button type="submit" class="btn btn-success btn-lg w-100" id="completeSale">
 
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
+                        <i class="fas fa-check-circle me-1"></i>
+                        {{ __('dashboard.complete_sale') }}
+                    </button>
 
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Product</th>
-                                        <th width="120">Price</th>
-                                        <th width="140">Quantity</th>
-                                        <th width="120">Discount</th>
-                                        <th width="120">Total</th>
-                                        <th width="50"></th>
-                                    </tr>
-                                </thead>
+                    <button type="button" class="btn btn-outline-danger w-100 mt-2" id="clearCart">
 
-                                <tbody id="cartItems">
+                        <i class="fas fa-trash me-1"></i>
+                        {{ __('dashboard.clear_sale') }}
+                    </button>
 
-                                    <tr id="emptyCart">
-                                        <td colspan="6"
-                                            class="text-center text-muted py-5">
-                                            <i class="fas fa-shopping-cart fa-2x mb-2"></i>
-                                            <p class="mb-0">
-                                                No products added yet.
-                                            </p>
-                                            <small>
-                                                Scan a barcode or search for a product.
-                                            </small>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                    </div>
                 </div>
 
             </div>
 
-            {{-- RIGHT SIDE: PAYMENT --}}
-            <div class="col-lg-4">
+        </form>
+    </div>
 
-                <div class="card mb-3">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-                    <div class="card-header">
-                        <h5 class="mb-0">Order Summary</h5>
-                    </div>
+            const searchInput = document.getElementById('productSearch');
+            const searchButton = document.getElementById('searchButton');
+            const searchResults = document.getElementById('searchResults');
+            const searchMessage = document.getElementById('searchMessage');
+            const cartItems = document.getElementById('cartItems');
 
-                    <div class="card-body">
+            const invoiceDiscountInput = document.getElementById('invoiceDiscount');
+            const paidInput = document.getElementById('paid');
 
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="text-muted">Items</span>
-                            <strong id="summaryItems">0</strong>
-                        </div>
+            let cart = {};
+            let searchTimeout = null;
+            let isSearching = false;
 
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="text-muted">Subtotal</span>
-                            <strong id="subtotal">0.00</strong>
-                        </div>
+            const searchUrl = @json(route('sale.products.search'));
+            const csrfToken = @json(csrf_token());
 
-                        <div class="mb-3">
-                            <label class="form-label">Invoice Discount</label>
+            // ------------------------------------
+            // Search Products
+            // ------------------------------------
 
-                            <input type="number"
-                                   name="discount"
-                                   id="invoiceDiscount"
-                                   class="form-control"
-                                   value="{{ old('discount', 0) }}"
-                                   min="0"
-                                   step="0.01">
+            async function searchProducts(value) {
 
-                            @error('discount')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                value = value.trim();
 
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <span class="fw-semibold">Total</span>
-
-                            <h3 class="mb-0 text-primary" id="total">
-                                0.00
-                            </h3>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-
-                    <div class="card-header">
-                        <h5 class="mb-0">Payment</h5>
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="mb-3">
-                            <label class="form-label">Paid Amount</label>
-
-                            <input type="number"
-                                   name="paid"
-                                   id="paid"
-                                   class="form-control form-control-lg"
-                                   value="{{ old('paid', 0) }}"
-                                   min="0"
-                                   step="0.01">
-
-                            @error('paid')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="text-muted">Remaining Amount</span>
-
-                            <strong id="remaining" class="text-danger">
-                                0.00
-                            </strong>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Payment Method</label>
-
-                            <select name="payment_method" class="form-select">
-
-                                @foreach(\App\Enums\PaymentMethodEnum::cases() as $method)
-                                    <option value="{{ $method->value }}"
-                                        {{ old('payment_method', \App\Enums\PaymentMethodEnum::CASH->value) == $method->value ? 'selected' : '' }}>
-                                        {{ $method->value }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="alert alert-info py-2 mb-0">
-                            <small>
-                                The payment status will be calculated automatically
-                                based on the paid amount.
-                            </small>
-                        </div>
-
-                    </div>
-                </div>
-
-                {{-- Complete Sale --}}
-                <button type="submit"
-                        class="btn btn-success btn-lg w-100"
-                        id="completeSale">
-
-                    <i class="fas fa-check-circle me-1"></i>
-                    Complete Sale
-                </button>
-
-                <button type="button"
-                        class="btn btn-outline-danger w-100 mt-2"
-                        id="clearCart">
-
-                    <i class="fas fa-trash me-1"></i>
-                    Clear Sale
-                </button>
-
-            </div>
-
-        </div>
-
-    </form>
-
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const searchInput = document.getElementById('productSearch');
-    const searchButton = document.getElementById('searchButton');
-    const searchResults = document.getElementById('searchResults');
-    const searchMessage = document.getElementById('searchMessage');
-    const cartItems = document.getElementById('cartItems');
-
-    const invoiceDiscountInput = document.getElementById('invoiceDiscount');
-    const paidInput = document.getElementById('paid');
-
-    let cart = {};
-    let searchTimeout = null;
-    let isSearching = false;
-
-    const searchUrl = @json(route('sale.products.search'));
-    const csrfToken = @json(csrf_token());
-
-    // ------------------------------------
-    // Search Products
-    // ------------------------------------
-
-    async function searchProducts(value) {
-
-        value = value.trim();
-
-        if (!value) {
-            searchResults.style.display = 'none';
-            searchMessage.textContent = '';
-            return;
-        }
-
-        if (isSearching) return;
-
-        isSearching = true;
-
-        searchMessage.textContent = 'Searching...';
-
-        try {
-
-            const response = await fetch(
-                `${searchUrl}?search=${encodeURIComponent(value)}`,
-                {
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken
-                    }
+                if (!value) {
+                    searchResults.style.display = 'none';
+                    searchMessage.textContent = '';
+                    return;
                 }
-            );
 
-            if (!response.ok) {
-                throw new Error('Search request failed.');
+                if (isSearching) return;
+
+                isSearching = true;
+
+                searchMessage.textContent = @json(__('dashboard.searching'));
+
+                try {
+
+                    const response = await fetch(
+                        `${searchUrl}?search=${encodeURIComponent(value)}`, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken
+                            }
+                        }
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('Search request failed.');
+                    }
+
+                    const data = await response.json();
+
+                    displaySearchResults(data.products, value);
+
+                } catch (error) {
+
+                    searchMessage.textContent = @json(__('dashboard.search_products_error'));
+                    searchResults.style.display = 'none';
+
+                } finally {
+
+                    isSearching = false;
+
+                }
             }
 
-            const data = await response.json();
 
-            displaySearchResults(data.products, value);
+            // ------------------------------------
+            // Display Search Results
+            // ------------------------------------
 
-        } catch (error) {
+            function displaySearchResults(products, searchValue) {
 
-            searchMessage.textContent = 'Unable to search products. Please try again.';
-            searchResults.style.display = 'none';
+                searchResults.innerHTML = '';
 
-        } finally {
+                if (!products.length) {
 
-            isSearching = false;
+                    searchResults.style.display = 'none';
+                    searchMessage.textContent = @json(__('dashboard.no_available_product_found'));
 
-        }
-    }
+                    return;
+                }
 
+                searchMessage.textContent = '';
 
-    // ------------------------------------
-    // Display Search Results
-    // ------------------------------------
+                products.forEach(product => {
 
-    function displaySearchResults(products, searchValue) {
+                    const button = document.createElement('button');
 
-        searchResults.innerHTML = '';
+                    button.type = 'button';
+                    button.className =
+                        'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
 
-        if (!products.length) {
+                    const info = document.createElement('div');
 
-            searchResults.style.display = 'none';
-            searchMessage.textContent = 'No available product found.';
+                    const name = document.createElement('strong');
+                    name.textContent = product.name;
 
-            return;
-        }
+                    const details = document.createElement('small');
+                    details.className = 'd-block text-muted';
+                    details.textContent =
+                        `${@json(__('dashboard.barcode'))}: ${product.barcode || '-'} | ${@json(__('dashboard.stock'))}: ${product.stock}`;
 
-        searchMessage.textContent = '';
+                    info.appendChild(name);
+                    info.appendChild(details);
 
-        products.forEach(product => {
+                    const price = document.createElement('strong');
+                    price.textContent = Number(product.price).toFixed(2);
 
-            const button = document.createElement('button');
+                    button.appendChild(info);
+                    button.appendChild(price);
 
-            button.type = 'button';
-            button.className =
-                'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
+                    button.addEventListener('click', function() {
+                        addProduct(product);
+                    });
 
-            const info = document.createElement('div');
+                    searchResults.appendChild(button);
 
-            const name = document.createElement('strong');
-            name.textContent = product.name;
+                });
 
-            const details = document.createElement('small');
-            details.className = 'd-block text-muted';
-            details.textContent =
-                `Barcode: ${product.barcode || '-'} | Stock: ${product.stock}`;
+                searchResults.style.display = 'block';
 
-            info.appendChild(name);
-            info.appendChild(details);
-
-            const price = document.createElement('strong');
-            price.textContent = Number(product.price).toFixed(2);
-
-            button.appendChild(info);
-            button.appendChild(price);
-
-            button.addEventListener('click', function () {
-                addProduct(product);
-            });
-
-            searchResults.appendChild(button);
-
-        });
-
-        searchResults.style.display = 'block';
-
-        // If exact barcode matched, add directly.
-        if (
-            products.length === 1 &&
-            products[0].barcode &&
-            products[0].barcode.toLowerCase() === searchValue.toLowerCase()
-        ) {
-            addProduct(products[0]);
-        }
-    }
-
-
-    // ------------------------------------
-    // Add Product to Cart
-    // ------------------------------------
-
-    function addProduct(product) {
-
-        const productId = product.id;
-
-        if (cart[productId]) {
-
-            const newQuantity = cart[productId].quantity + 1;
-
-            if (newQuantity > product.stock) {
-                alert('The requested quantity exceeds available stock.');
-                return;
+                // If exact barcode matched, add directly.
+                if (
+                    products.length === 1 &&
+                    products[0].barcode &&
+                    products[0].barcode.toLowerCase() === searchValue.toLowerCase()
+                ) {
+                    addProduct(products[0]);
+                }
             }
 
-            cart[productId].quantity = newQuantity;
 
-        } else {
+            // ------------------------------------
+            // Add Product to Cart
+            // ------------------------------------
 
-            cart[productId] = {
-                id: product.id,
-                name: product.name,
-                barcode: product.barcode,
-                price: Number(product.price),
-                stock: Number(product.stock),
-                quantity: 1,
-                discount: 0
-            };
+            function addProduct(product) {
 
-        }
+                const productId = product.id;
 
-        searchInput.value = '';
-        searchResults.style.display = 'none';
-        searchMessage.textContent = '';
+                if (cart[productId]) {
 
-        renderCart();
+                    const newQuantity = cart[productId].quantity + 1;
 
-        // Keep focus on barcode input for the next scan.
-        searchInput.focus();
-    }
+                    if (newQuantity > product.stock) {
+                        alert(@json(__('dashboard.requested_quantity_exceeds_stock')));
+                        return;
+                    }
+
+                    cart[productId].quantity = newQuantity;
+
+                } else {
+
+                    cart[productId] = {
+                        id: product.id,
+                        name: product.name,
+                        barcode: product.barcode,
+                        price: Number(product.price),
+                        stock: Number(product.stock),
+                        quantity: 1,
+                        discount: 0
+                    };
+
+                }
+
+                searchInput.value = '';
+                searchResults.style.display = 'none';
+                searchMessage.textContent = '';
+
+                renderCart();
+
+                // Keep focus on barcode input for the next scan.
+                searchInput.focus();
+            }
 
 
-    // ------------------------------------
-    // Render Cart
-    // ------------------------------------
+            // ------------------------------------
+            // Render Cart
+            // ------------------------------------
 
-    function renderCart() {
+            function renderCart() {
 
-        cartItems.innerHTML = '';
+                cartItems.innerHTML = '';
 
-        const products = Object.values(cart);
+                const products = Object.values(cart);
 
-        if (!products.length) {
+                if (!products.length) {
 
-            cartItems.innerHTML = `
+                    cartItems.innerHTML = `
                 <tr>
                     <td colspan="6" class="text-center text-muted py-5">
                         <i class="fas fa-shopping-cart fa-2x mb-2"></i>
-                        <p class="mb-0">No products added yet.</p>
-                        <small>Scan a barcode or search for a product.</small>
+                        <p class="mb-0">{{ __('dashboard.no_products_added') }}</p>
+                        <small>{{ __('dashboard.scan_or_search_product') }}</small>
                     </td>
                 </tr>
             `;
 
-            calculateTotals();
+                    calculateTotals();
 
-            return;
-        }
-
-        products.forEach((product, index) => {
-
-            const row = document.createElement('tr');
-
-            const productCell = document.createElement('td');
-
-            const productName = document.createElement('strong');
-            productName.textContent = product.name;
-
-            const productBarcode = document.createElement('small');
-            productBarcode.className = 'd-block text-muted';
-            productBarcode.textContent = product.barcode || '';
-
-            productCell.appendChild(productName);
-            productCell.appendChild(productBarcode);
-
-
-            const priceCell = document.createElement('td');
-            priceCell.textContent = product.price.toFixed(2);
-
-
-            const quantityCell = document.createElement('td');
-
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'number';
-            quantityInput.min = 1;
-            quantityInput.max = product.stock;
-            quantityInput.value = product.quantity;
-            quantityInput.className = 'form-control form-control-sm';
-
-            quantityInput.addEventListener('change', function () {
-
-                let quantity = parseInt(this.value) || 1;
-
-                if (quantity < 1) quantity = 1;
-
-                if (quantity > product.stock) {
-                    alert('The requested quantity exceeds available stock.');
-                    quantity = product.stock;
+                    return;
                 }
 
-                cart[product.id].quantity = quantity;
+                products.forEach((product, index) => {
 
-                renderCart();
-            });
+                    const row = document.createElement('tr');
 
-            quantityCell.appendChild(quantityInput);
+                    const productCell = document.createElement('td');
+
+                    const productName = document.createElement('strong');
+                    productName.textContent = product.name;
+
+                    const productBarcode = document.createElement('small');
+                    productBarcode.className = 'd-block text-muted';
+                    productBarcode.textContent = product.barcode || '';
+
+                    productCell.appendChild(productName);
+                    productCell.appendChild(productBarcode);
 
 
-            const discountCell = document.createElement('td');
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = product.price.toFixed(2);
 
-            const discountInput = document.createElement('input');
-            discountInput.type = 'number';
-            discountInput.min = 0;
-            discountInput.step = '0.01';
-            discountInput.value = product.discount;
-            discountInput.className = 'form-control form-control-sm';
 
-            discountInput.addEventListener('change', function () {
+                    const quantityCell = document.createElement('td');
 
-                let discount = Number(this.value) || 0;
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.min = 1;
+                    quantityInput.max = product.stock;
+                    quantityInput.value = product.quantity;
+                    quantityInput.className = 'form-control form-control-sm';
 
-                const maxDiscount = product.price * product.quantity;
+                    quantityInput.addEventListener('change', function() {
 
-                if (discount < 0) discount = 0;
+                        let quantity = parseInt(this.value) || 1;
 
-                if (discount > maxDiscount) {
-                    alert('Discount cannot exceed product total.');
-                    discount = maxDiscount;
+                        if (quantity < 1) quantity = 1;
+
+                        if (quantity > product.stock) {
+                            alert(@json(__('dashboard.requested_quantity_exceeds_stock')));
+                            quantity = product.stock;
+                        }
+
+                        cart[product.id].quantity = quantity;
+
+                        renderCart();
+                    });
+
+                    quantityCell.appendChild(quantityInput);
+
+
+                    const discountCell = document.createElement('td');
+
+                    const discountInput = document.createElement('input');
+                    discountInput.type = 'number';
+                    discountInput.min = 0;
+                    discountInput.step = '0.01';
+                    discountInput.value = product.discount;
+                    discountInput.className = 'form-control form-control-sm';
+
+                    discountInput.addEventListener('change', function() {
+
+                        let discount = Number(this.value) || 0;
+
+                        const maxDiscount = product.price * product.quantity;
+
+                        if (discount < 0) discount = 0;
+
+                        if (discount > maxDiscount) {
+                            alert(@json(__('dashboard.discount_exceeds_product_total')));
+                            discount = maxDiscount;
+                        }
+
+                        cart[product.id].discount = discount;
+
+                        renderCart();
+                    });
+
+                    discountCell.appendChild(discountInput);
+
+
+                    const totalCell = document.createElement('td');
+
+                    const lineTotal = Math.max(
+                        0,
+                        (product.price * product.quantity) - product.discount
+                    );
+
+                    totalCell.textContent = lineTotal.toFixed(2);
+
+
+                    const actionCell = document.createElement('td');
+
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.className = 'btn btn-sm btn-outline-danger';
+                    removeButton.innerHTML = '<i class="fas fa-trash"></i>';
+
+                    removeButton.addEventListener('click', function() {
+
+                        delete cart[product.id];
+
+                        renderCart();
+                        searchInput.focus();
+                    });
+
+                    actionCell.appendChild(removeButton);
+
+
+                    // Hidden inputs submitted to Laravel.
+                    const hiddenProduct = document.createElement('input');
+                    hiddenProduct.type = 'hidden';
+                    hiddenProduct.name = `items[${index}][product_id]`;
+                    hiddenProduct.value = product.id;
+
+                    const hiddenQuantity = document.createElement('input');
+                    hiddenQuantity.type = 'hidden';
+                    hiddenQuantity.name = `items[${index}][quantity]`;
+                    hiddenQuantity.value = product.quantity;
+
+                    const hiddenDiscount = document.createElement('input');
+                    hiddenDiscount.type = 'hidden';
+                    hiddenDiscount.name = `items[${index}][discount]`;
+                    hiddenDiscount.value = product.discount;
+
+                    actionCell.appendChild(hiddenProduct);
+                    actionCell.appendChild(hiddenQuantity);
+                    actionCell.appendChild(hiddenDiscount);
+
+                    row.appendChild(productCell);
+                    row.appendChild(priceCell);
+                    row.appendChild(quantityCell);
+                    row.appendChild(discountCell);
+                    row.appendChild(totalCell);
+                    row.appendChild(actionCell);
+
+                    cartItems.appendChild(row);
+
+                });
+
+                calculateTotals();
+            }
+
+
+            // ------------------------------------
+            // Calculate Invoice Totals
+            // ------------------------------------
+
+            function calculateTotals() {
+
+                const products = Object.values(cart);
+
+                let subtotal = 0;
+                let totalQuantity = 0;
+
+                products.forEach(product => {
+
+                    const itemTotal =
+                        (product.price * product.quantity) - product.discount;
+
+                    subtotal += itemTotal;
+                    totalQuantity += product.quantity;
+
+                });
+
+                const invoiceDiscount = Math.max(
+                    0,
+                    Number(invoiceDiscountInput.value) || 0
+                );
+
+                const total = Math.max(0, subtotal - invoiceDiscount);
+
+                const paid = Math.max(0, Number(paidInput.value) || 0);
+
+                const remaining = Math.max(0, total - paid);
+
+                document.getElementById('subtotal').textContent =
+                    subtotal.toFixed(2);
+
+                document.getElementById('total').textContent =
+                    total.toFixed(2);
+
+                document.getElementById('remaining').textContent =
+                    remaining.toFixed(2);
+
+                document.getElementById('itemsCount').textContent =
+                    `${totalQuantity} ${@json(__('dashboard.items'))}`;
+
+                document.getElementById('summaryItems').textContent =
+                    totalQuantity;
+            }
+
+
+            // ------------------------------------
+            // Search Input Events
+            // ------------------------------------
+
+            searchInput.addEventListener('input', function() {
+
+                clearTimeout(searchTimeout);
+
+                const value = this.value.trim();
+
+                if (!value) {
+                    searchResults.style.display = 'none';
+                    searchMessage.textContent = '';
+                    return;
                 }
 
-                cart[product.id].discount = discount;
+                searchTimeout = setTimeout(function() {
+                    searchProducts(value);
+                }, 300);
 
-                renderCart();
             });
 
-            discountCell.appendChild(discountInput);
+
+            searchButton.addEventListener('click', function() {
+
+                clearTimeout(searchTimeout);
+                searchProducts(searchInput.value);
+
+            });
 
 
-            const totalCell = document.createElement('td');
+            // USB Barcode Scanner usually sends Enter after scanning.
+            searchInput.addEventListener('keydown', function(event) {
 
-            const lineTotal = Math.max(
-                0,
-                (product.price * product.quantity) - product.discount
-            );
+                if (event.key === 'Enter') {
 
-            totalCell.textContent = lineTotal.toFixed(2);
+                    event.preventDefault();
+
+                    clearTimeout(searchTimeout);
+
+                    searchProducts(this.value);
+
+                }
+
+            });
 
 
-            const actionCell = document.createElement('td');
+            invoiceDiscountInput.addEventListener('input', calculateTotals);
+            paidInput.addEventListener('input', calculateTotals);
 
-            const removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.className = 'btn btn-sm btn-outline-danger';
-            removeButton.innerHTML = '<i class="fas fa-trash"></i>';
 
-            removeButton.addEventListener('click', function () {
+            // ------------------------------------
+            // Clear Cart
+            // ------------------------------------
 
-                delete cart[product.id];
+            document.getElementById('clearCart').addEventListener('click', function() {
+
+                if (!Object.keys(cart).length) return;
+
+                if (!confirm(@json(__('dashboard.clear_sale_confirmation')))) {
+                    return;
+                }
+
+                cart = {};
+
+                invoiceDiscountInput.value = 0;
+                paidInput.value = 0;
 
                 renderCart();
+
+                searchInput.value = '';
                 searchInput.focus();
+
             });
 
-            actionCell.appendChild(removeButton);
 
+            // ------------------------------------
+            // Form Validation
+            // ------------------------------------
 
-            // Hidden inputs submitted to Laravel.
-            const hiddenProduct = document.createElement('input');
-            hiddenProduct.type = 'hidden';
-            hiddenProduct.name = `items[${index}][product_id]`;
-            hiddenProduct.value = product.id;
+            document.getElementById('saleForm').addEventListener('submit', function(event) {
 
-            const hiddenQuantity = document.createElement('input');
-            hiddenQuantity.type = 'hidden';
-            hiddenQuantity.name = `items[${index}][quantity]`;
-            hiddenQuantity.value = product.quantity;
+                if (!Object.keys(cart).length) {
 
-            const hiddenDiscount = document.createElement('input');
-            hiddenDiscount.type = 'hidden';
-            hiddenDiscount.name = `items[${index}][discount]`;
-            hiddenDiscount.value = product.discount;
+                    event.preventDefault();
 
-            actionCell.appendChild(hiddenProduct);
-            actionCell.appendChild(hiddenQuantity);
-            actionCell.appendChild(hiddenDiscount);
+                    alert(@json(__('dashboard.add_at_least_one_product')));
+                    searchInput.focus();
 
-            row.appendChild(productCell);
-            row.appendChild(priceCell);
-            row.appendChild(quantityCell);
-            row.appendChild(discountCell);
-            row.appendChild(totalCell);
-            row.appendChild(actionCell);
+                    return;
+                }
 
-            cartItems.appendChild(row);
+                const subtotal = Object.values(cart).reduce((sum, product) => {
+                    return sum + (product.price * product.quantity) - product.discount;
+                }, 0);
 
-        });
+                const invoiceDiscount = Number(invoiceDiscountInput.value) || 0;
+                const paid = Number(paidInput.value) || 0;
 
-        calculateTotals();
-    }
+                const total = Math.max(0, subtotal - invoiceDiscount);
 
+                if (invoiceDiscount > subtotal) {
 
-    // ------------------------------------
-    // Calculate Invoice Totals
-    // ------------------------------------
+                    event.preventDefault();
 
-    function calculateTotals() {
+                    alert(@json(__('dashboard.invoice_discount_exceeds_subtotal')));
 
-        const products = Object.values(cart);
+                    return;
+                }
 
-        let subtotal = 0;
-        let totalQuantity = 0;
+                if (paid > total) {
 
-        products.forEach(product => {
+                    event.preventDefault();
 
-            const itemTotal =
-                (product.price * product.quantity) - product.discount;
+                    alert(@json(__('dashboard.paid_amount_exceeds_invoice_total')));
 
-            subtotal += itemTotal;
-            totalQuantity += product.quantity;
+                    return;
+                }
 
-        });
+                document.getElementById('completeSale').disabled = true;
 
-        const invoiceDiscount = Math.max(
-            0,
-            Number(invoiceDiscountInput.value) || 0
-        );
+            });
 
-        const total = Math.max(0, subtotal - invoiceDiscount);
+            document.addEventListener('keydown', function(event) {
 
-        const paid = Math.max(0, Number(paidInput.value) || 0);
+                if (event.key === 'F2') {
+                    event.preventDefault();
 
-        const remaining = Math.max(0, total - paid);
+                    searchInput.focus();
+                    searchInput.select();
+                }
 
-        document.getElementById('subtotal').textContent =
-            subtotal.toFixed(2);
+            });
 
-        document.getElementById('total').textContent =
-            total.toFixed(2);
+            // Initial state
+            renderCart();
 
-        document.getElementById('remaining').textContent =
-            remaining.toFixed(2);
-
-        document.getElementById('itemsCount').textContent =
-            `${totalQuantity} Items`;
-
-        document.getElementById('summaryItems').textContent =
-            totalQuantity;
-    }
-
-
-    // ------------------------------------
-    // Search Input Events
-    // ------------------------------------
-
-    searchInput.addEventListener('input', function () {
-
-        clearTimeout(searchTimeout);
-
-        const value = this.value.trim();
-
-        if (!value) {
-            searchResults.style.display = 'none';
-            searchMessage.textContent = '';
-            return;
-        }
-
-        searchTimeout = setTimeout(function () {
-            searchProducts(value);
-        }, 300);
-
-    });
-
-
-    searchButton.addEventListener('click', function () {
-
-        clearTimeout(searchTimeout);
-        searchProducts(searchInput.value);
-
-    });
-
-
-    // USB Barcode Scanner usually sends Enter after scanning.
-    searchInput.addEventListener('keydown', function (event) {
-
-        if (event.key === 'Enter') {
-
-            event.preventDefault();
-
-            clearTimeout(searchTimeout);
-
-            searchProducts(this.value);
-
-        }
-
-    });
-
-
-    invoiceDiscountInput.addEventListener('input', calculateTotals);
-    paidInput.addEventListener('input', calculateTotals);
-
-
-    // ------------------------------------
-    // Clear Cart
-    // ------------------------------------
-
-    document.getElementById('clearCart').addEventListener('click', function () {
-
-        if (!Object.keys(cart).length) return;
-
-        if (!confirm('Are you sure you want to clear this sale?')) {
-            return;
-        }
-
-        cart = {};
-
-        invoiceDiscountInput.value = 0;
-        paidInput.value = 0;
-
-        renderCart();
-
-        searchInput.value = '';
-        searchInput.focus();
-
-    });
-
-
-    // ------------------------------------
-    // Form Validation
-    // ------------------------------------
-
-    document.getElementById('saleForm').addEventListener('submit', function (event) {
-
-        if (!Object.keys(cart).length) {
-
-            event.preventDefault();
-
-            alert('Please add at least one product.');
             searchInput.focus();
 
-            return;
-        }
-
-        const subtotal = Object.values(cart).reduce((sum, product) => {
-            return sum + (product.price * product.quantity) - product.discount;
-        }, 0);
-
-        const invoiceDiscount = Number(invoiceDiscountInput.value) || 0;
-        const paid = Number(paidInput.value) || 0;
-
-        const total = Math.max(0, subtotal - invoiceDiscount);
-
-        if (invoiceDiscount > subtotal) {
-
-            event.preventDefault();
-
-            alert('Invoice discount cannot exceed subtotal.');
-
-            return;
-        }
-
-        if (paid > total) {
-
-            event.preventDefault();
-
-            alert('Paid amount cannot exceed invoice total.');
-
-            return;
-        }
-
-        document.getElementById('completeSale').disabled = true;
-
-    });
-
-    document.addEventListener('keydown', function (event) {
-
-    if (event.key === 'F2') {
-            event.preventDefault();
-
-            searchInput.focus();
-            searchInput.select();
-        }
-
-    });
-
-    // Initial state
-    renderCart();
-
-    searchInput.focus();
-
-});
-</script>
+        });
+    </script>
 
 @endsection

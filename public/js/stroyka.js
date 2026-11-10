@@ -93,52 +93,6 @@
     */
     window.stroyka.sidebarMenuState = (function (){
         const storageKey = 'sa-sidebar-menu-state';
-        const $sidebarBody = $('.sa-sidebar__body');
-
-        if ($sidebarBody.length > 0) {
-            let itemsState = sessionStorage.getItem(storageKey);
-
-            if (itemsState) {
-                itemsState = JSON.parse(itemsState);
-
-                itemsState.forEach(function(path) {
-                    const itemQuery = path.slice(1).map(function (itemIndex) {
-                        return '.sa-nav__menu > .sa-nav__menu-item:eq(' + itemIndex + ')';
-                    });
-                    const query = '.sa-nav__section:eq(' + path[0] + ') > ' + itemQuery.join(' > ');
-
-                    $(query).addClass('sa-nav__menu-item--open');
-                });
-            }
-
-            $sidebarBody.on('sa-collapse-state', function () {
-                function getMenuState(parentElement, path) {
-                    path = path || [];
-
-                    let result = [];
-
-                    $('> .sa-nav__menu > .sa-nav__menu-item', parentElement).each(function (index, element) {
-                        const currentPath = path.concat([index]);
-
-                        if ($(element).is('.sa-nav__menu-item--open')) {
-                            result.push(currentPath);
-                        }
-
-                        result = result.concat(getMenuState(element, currentPath));
-                    });
-
-                    return result;
-                }
-
-                let currentState = [];
-
-                $('.sa-nav__section').each(function (sectionIndex, sectionElement) {
-                    currentState = currentState.concat(getMenuState(sectionElement, [sectionIndex]));
-                });
-
-                sessionStorage.setItem(storageKey, JSON.stringify(currentState));
-            });
-        }
 
         return {
             clear: function() {

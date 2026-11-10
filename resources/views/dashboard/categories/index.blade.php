@@ -5,7 +5,7 @@
 @php
     $breadcrumbItems = [
         [
-            'label' => 'Categories',
+            'label' => __('dashboard.categories'),
         ],
     ];
 @endphp
@@ -26,7 +26,7 @@
             ])
 
             <h1 class="h3 m-0">
-                Categories
+                {{ __('dashboard.categories') }}
             </h1>
 
         </div>
@@ -39,7 +39,7 @@
                 data-bs-toggle="modal"
                 data-bs-target="#categoryModal"
             >
-                New category
+                {{ __('dashboard.new_category') }}
             </button>
 
         </div>
@@ -59,7 +59,7 @@
 
         <input
             type="text"
-            placeholder="Start typing to search for categories"
+            placeholder="{{ __('dashboard.search_categories') }}"
             class="form-control form-control--search mx-auto"
             id="table-search"
         />
@@ -86,20 +86,20 @@
                     <input
                         type="checkbox"
                         class="form-check-input m-0 fs-exact-16 d-block"
-                        aria-label="Select all"
+                        aria-label="{{ __('dashboard.select_all') }}"
                     />
                 </th>
 
                 <th class="min-w-20x">
-                    Name
+                    {{ __('dashboard.name') }}
                 </th>
 
                 <th>
-                    Description
+                    {{ __('dashboard.description') }}
                 </th>
 
                 <th>
-                    Created
+                    {{ __('dashboard.created') }}
                 </th>
 
                 <th
@@ -125,7 +125,7 @@
                         <input
                             type="checkbox"
                             class="form-check-input m-0 fs-exact-16 d-block"
-                            aria-label="Select category"
+                            aria-label="{{ __('dashboard.select_category') }}"
                         />
 
                     </td>
@@ -171,7 +171,7 @@
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                aria-label="More"
+                                aria-label="{{ __('dashboard.more') }}"
                             >
 
                                 <svg
@@ -207,7 +207,7 @@
 
                                         data-category-update-url="{{ route('category.update', $category) }}"
                                     >
-                                        Edit
+                                        {{ __('dashboard.edit') }}
                                     </button>
 
                                 </li>
@@ -232,7 +232,7 @@
 
                                         data-delete-name="{{ $category->name }}"
                                     >
-                                        Delete
+                                        {{ __('dashboard.delete') }}
                                     </button>
 
                                 </li>
@@ -253,7 +253,7 @@
                         colspan="5"
                         class="text-center py-5 text-muted"
                     >
-                        No categories found.
+                        {{ __('dashboard.no_categories_found') }}
                     </td>
 
                 </tr>
@@ -306,14 +306,14 @@
                     class="modal-title"
                     id="categoryModalTitle"
                 >
-                    Create Category
+                    {{ __('dashboard.create_category') }}
                 </h5>
 
                 <button
                     type="button"
-                    class="btn-close"
+                    class="btn-close m-0"
                     data-bs-dismiss="modal"
-                    aria-label="Close"
+                    aria-label="{{ __('dashboard.close') }}"
                 ></button>
 
             </div>
@@ -341,7 +341,7 @@
                             for="categoryName"
                             class="form-label"
                         >
-                            Name
+                            {{ __('dashboard.name') }}
                         </label>
 
                         <input
@@ -353,7 +353,7 @@
 
                             value="{{ old('name') }}"
 
-                            placeholder="Category name"
+                            placeholder="{{ __('dashboard.category_name') }}"
                         >
 
                         @error('name')
@@ -374,7 +374,7 @@
                             for="categoryDescription"
                             class="form-label"
                         >
-                            Description
+                            {{ __('dashboard.description') }}
                         </label>
 
                         <textarea
@@ -385,7 +385,7 @@
 
                             rows="4"
 
-                            placeholder="Category description"
+                            placeholder="{{ __('dashboard.category_description') }}"
                         >{{ old('description') }}</textarea>
 
                         @error('description')
@@ -409,7 +409,7 @@
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
-                        Cancel
+                        {{ __('dashboard.cancel') }}
                     </button>
 
                     <button
@@ -417,7 +417,7 @@
                         class="btn btn-primary"
                         id="categorySubmitButton"
                     >
-                        Save
+                        {{ __('dashboard.save') }}
                     </button>
 
                 </div>
@@ -486,10 +486,10 @@ document.addEventListener('DOMContentLoaded', function () {
             ) {
 
                 categoryModalTitle.textContent =
-                    'Create Category';
+                    @json(__('dashboard.create_category'));
 
                 categorySubmitButton.textContent =
-                    'Save';
+                    @json(__('dashboard.save'));
 
                 categoryForm.action =
                     "{{ route('category.store') }}";
@@ -527,10 +527,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             categoryModalTitle.textContent =
-                'Edit Category';
+                @json(__('dashboard.edit_category'));
 
             categorySubmitButton.textContent =
-                'Save changes';
+                @json(__('dashboard.save_changes'));
 
 
             categoryForm.action =
